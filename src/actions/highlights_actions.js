@@ -16,7 +16,6 @@ const receiveHighlights = () => {
 }
 
 const removeHighlight = (id) => {
-    console.log("removeHighlight")
     return {
         type: REMOVE_HIGHLIGHT,
         id
@@ -32,6 +31,5 @@ export const fetchHighlights = () => dispatch => {
 };
 
 export const deleteHighlight = (id) => dispatch => {
-    console.log("deleteHighlight")
     return dispatch(removeHighlight(id));
 };

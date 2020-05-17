@@ -20,7 +20,7 @@ function Highlights({ highlights, fetchHighlights, deleteHighlight }) {
 
     useEffect(() => {
         fetchHighlights();
-    }, [])
+    }, [fetchHighlights])
 
     const highlightList = highlights.length ? (
         highlights.map(({ id, text, cfiRange, rendition }, i) => {

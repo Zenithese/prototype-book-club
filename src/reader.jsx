@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { ReactReader } from "react-reader";
 import { connect } from 'react-redux';
 import { createHighlight } from './actions/highlights_actions'
-// import Hightlights from "./highlights";
 
 const storage = global.localStorage || null;
 
@@ -26,14 +25,7 @@ class Reader extends Component {
             largeText: false,
         };
         this.rendition = null;
-        // this.handleHighlight = this.handleHighlight.bind(this)
     }
-
-    // handleHighlight = (li) => {
-    //     this.setState({
-    //         highlights: [...this.state.highlights, li]
-    //     })
-    // }
 
     getRendition = rendition => {
         // Set inital font-size, and add a pointer to rendition for later updates
@@ -126,7 +118,6 @@ class Reader extends Component {
                     locationChanged={this.onLocationChanged}
                     getRendition={this.getRendition}
                 />
-                {/* <Hightlights hightlights={highlights} /> */}
                 {/* <button style={{ position: "absolute", top: "5px", zIndex: "1"}} onClick={this.onToggleFontSize} ></button> */}
             </div>
         );
