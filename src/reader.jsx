@@ -24,7 +24,6 @@ class Reader extends Component {
             localFile: null,
             localName: null,
             largeText: false,
-            highlights: [],
         };
         this.rendition = null;
         // this.handleHighlight = this.handleHighlight.bind(this)
@@ -59,9 +58,6 @@ class Reader extends Component {
         });
 
         const handleHighlight = (highlight) => {
-            this.setState({
-                highlights: [...this.state.highlights, highlight]
-            })
             this.props.createHighlight(highlight);
         }
 
@@ -81,6 +77,7 @@ class Reader extends Component {
                     //     </li>
 
                     let highlight = {
+                        id: Math.random(),
                         text,
                         cfiRange,
                         rendition,

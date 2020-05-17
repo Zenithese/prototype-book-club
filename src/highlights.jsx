@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchHighlights } from './actions/highlights_actions'
+import { fetchHighlights, deleteHighlight } from './actions/highlights_actions'
 
 const mapStateToProps = ({ entities }) => {
     return {
-        highlights: entities.highlights
+        highlights: Object.values(entities.highlights)
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchHighlights: () => dispatch(fetchHighlights())
+        fetchHighlights: () => dispatch(fetchHighlights()),
+        deleteHighlight: (id) => dispatch(deleteHighlight(id))
     }
 }
 
-function Highlights({ highlights, fetchHighlights }) {
+function Highlights({ highlights, fetchHighlights, deleteHighlight }) {
     const [toggle, setToggle] = useState(false)
 
     useEffect(() => {
@@ -22,7 +23,7 @@ function Highlights({ highlights, fetchHighlights }) {
     }, [])
 
     const highlightList = highlights.length ? (
-        highlights.map(({ cfiRange, rendition, text }, i) => {
+        highlights.map(({ id, text, cfiRange, rendition }, i) => {
             return (
                 <div className="annotation" key={i}>
                     <a href={`#${cfiRange}`} onClick={() => rendition.display(cfiRange)}>Go to:</a>
@@ -30,7 +31,7 @@ function Highlights({ highlights, fetchHighlights }) {
                     "{text}"
                     <br/>
                     <textarea></textarea>
-                    <a href={`#${cfiRange}`} onClick={() => { rendition.annotations.remove(cfiRange, "highlight"); return false; }}>remove</a>
+                    <a href={`#${cfiRange}`} onClick={() => { rendition.annotations.remove(cfiRange, "highlight"); deleteHighlight(id)}}>remove</a>
                 </div>
             )
         })
