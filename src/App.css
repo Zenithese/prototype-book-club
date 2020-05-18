@@ -1,9 +1,60 @@
- .App {
+.App {
   text-align: center;
+}
+.annotations-container {
+  width: 5%;
+  height: 5%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.annotations-container:hover {
+  height: 11.5%;
+}
+
+.annotations-container:hover > .toggle-button {
+  opacity: 1;
+  height: 5%;
+}
+
+.toggle-button {
+  height: 5%;
+  width: 5%;
+  position: fixed;
+  z-index: 1;
+  top: 5%;
+  right: 0;
+  background-color: silver;
+  overflow: hidden;
+  transition: 0.5s;
+  opacity: .9;
+  border-radius: 17px;
+  /* transition: height .2s ease-out; */
+  /* opacity: 0; */
+}
+
+.toggle-button-opened {
+  height: 5%;
+  width: 5%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 33%;
+  background-color: silver;
+  overflow: hidden;
+  transition: 0.5s;
+  opacity: .9;
+  border-radius: 17px;
+}
+
+.inner-toggle-highlights-button {
+  margin-top: 15px;
 }
 
 .annotations-closed {
-  height: 3%;
+  height: 5%;
   width: 5%;
   position: fixed;
   z-index: 1;
@@ -13,7 +64,7 @@
   overflow: hidden;
   transition: 0.5s;
   opacity: .9;
-  border-radius: 20px;
+  border-radius: 17px;
 }
 
 .annotations-opened {
@@ -52,16 +103,22 @@
 }
 
 textarea {
-    resize: none;
-    overflow: auto;
-    width: 90%;
-    height: 100px;
+  resize: none;
+  overflow: auto;
+  width: 90%;
+  height: 100px;
 }
 
-.annotations-button {
+.annotations-buttons {
   position: absolute;
   background-color: rgb(192, 192, 192, .5);
   left: 0px;
+}
+
+.toggle-highlights-button { 
+  position: absolute;
+  top: 5px;
+  z-index: 1;
 }
 
 .highlight-list-closed {

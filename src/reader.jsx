@@ -1,15 +1,22 @@
 import React, { Component } from "react";
 import { ReactReader } from "react-reader";
 import { connect } from 'react-redux';
-import { createHighlight } from './actions/highlights_actions'
+import { createHighlight, fetchHighlights } from './actions/highlights_actions'
 
 const storage = global.localStorage || null;
 
 const mapDispatchToProps = dispatch => {
     return {
-        createHighlight: (highlight) => dispatch(createHighlight(highlight))
+        createHighlight: (highlight) => dispatch(createHighlight(highlight)),
+        fetchHighlights: () => dispatch(fetchHighlights()),
     };
 };
+
+const mapStateToProps = ({ entities }) => {
+    return {
+        highlights: Object.values(entities.highlights)
+    }
+}
 
 class Reader extends Component {
     constructor(props) {
@@ -33,20 +40,23 @@ class Reader extends Component {
         // this.rendition = rendition;
         // rendition.themes.fontSize(largeText ? "140%" : "100%");
         rendition.on("selected", function (cfiRange, contents) {
-            rendition.annotations.highlight(cfiRange, {}, (e) => {
-                console.log("highlight clicked", e.target);
-            });
+            rendition.annotations.highlight(
+                cfiRange, 
+                {}, 
+                (e) => {console.log("highlight clicked", e.target)}, 
+                "hl", 
+                { "fill": "yellow", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
+            );
             contents.window.getSelection().removeAllRanges();
-
         });
 
         rendition.themes.default({
             '::selection': {
                 'background': 'rgba(255,255,0, 0.3)'
             },
-            '.epubjs-hl': {
-                'fill': 'yellow', 'fill-opacity': '0.3', 'mix-blend-mode': 'multiply'
-            },
+            // '.epubjs-hl': {
+            //     'fill': 'yellow', 'fill-opacity': '0.3', 'mix-blend-mode': 'multiply'
+            // },
         });
 
         const handleHighlight = (highlight) => {
@@ -54,6 +64,8 @@ class Reader extends Component {
         }
 
         rendition.on("selected", function (cfiRange) {
+
+            // rendition.annotations.add("highlight", cfiRange, {}, (e) => { console.log("highlight clickity", e.target); }, "hl", { "fill": "red", "fill-opacity": "0.3", "mix-blend-mode": "multiply" })
 
             rendition.book.getRange(cfiRange).then(function (range) {
                 var text;
@@ -124,4 +136,4 @@ class Reader extends Component {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Reader);
+export default connect(mapStateToProps, mapDispatchToProps)(Reader);
