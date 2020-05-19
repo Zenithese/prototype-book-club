@@ -70,9 +70,6 @@ function Highlights({ highlights, fetchHighlights, deleteHighlight, rendition, f
             '::selection': {
                 'background': rgba,
             },
-            // '.epubjs-hl': {
-            //     'fill': 'yellow', 'fill-opacity': '0.3', 'mix-blend-mode': 'multiply'
-            // },
         });
 
         if (highlights.length) {
