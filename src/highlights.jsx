@@ -6,7 +6,6 @@ import { faCog, faEye } from '@fortawesome/free-solid-svg-icons'
 import { fetchRendition } from './actions/rendition_actions'
 
 
-
 const mapStateToProps = ({ entities }) => {
     return {
         highlights: Object.values(entities.highlights),
@@ -21,6 +20,7 @@ const mapDispatchToProps = dispatch => {
         fetchRendition: () => dispatch(fetchRendition())
     }
 }
+
 
 function Highlights({ highlights, fetchHighlights, deleteHighlight, rendition, fetchRendition }) {
     const [toggle, setToggle] = useState(false)
@@ -120,7 +120,6 @@ function Highlights({ highlights, fetchHighlights, deleteHighlight, rendition, f
                     {highlightList}
                 </ul>
             </div>
-            {/* <button className="toggle-button" onClick={() => { toggleHighlights() }}></button> */}
             <div className={toggle ? settings ? "toggle-button-closed-for-settings" : "toggle-button-opened" : settings ? "toggle-button-closed-for-settings" : "toggle-button"} onClick={() => { toggleHighlights() }}><FontAwesomeIcon icon={faEye} /></div>
             <div className={settings ? toggle ? "" : "settings-button-opened" : toggle ? "settings-button-closed-for-toggle" : "settings-button"} onClick={() => { if (!settings) { setSettings(!settings); if (toggle && !settings) { setToggle(!toggle) } } } }>
                 <FontAwesomeIcon icon={faCog} style={{fontSize: "20px"}} onClick={() => { setSettings(!settings); if (toggle && !settings) { setToggle(!toggle) } }} />
