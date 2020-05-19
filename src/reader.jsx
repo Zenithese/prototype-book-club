@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { ReactReader } from "react-reader";
 import { connect } from 'react-redux';
 import { createHighlight, fetchHighlights } from './actions/highlights_actions'
+import { createRendition } from './actions/rendition_actions'
 
 const storage = global.localStorage || null;
 
@@ -9,6 +10,7 @@ const mapDispatchToProps = dispatch => {
     return {
         createHighlight: (highlight) => dispatch(createHighlight(highlight)),
         fetchHighlights: () => dispatch(fetchHighlights()),
+        createRendition: (rendition) => dispatch(createRendition(rendition))
     };
 };
 
@@ -29,21 +31,19 @@ class Reader extends Component {
                     : 2,
             localFile: null,
             localName: null,
-            largeText: false,
         };
         this.rendition = null;
     }
 
     getRendition = rendition => {
-        // Set inital font-size, and add a pointer to rendition for later updates
-        // const { largeText } = this.state;
-        // this.rendition = rendition;
-        // rendition.themes.fontSize(largeText ? "140%" : "100%");
+        this.rendition = rendition
+        this.props.createRendition(rendition)
         rendition.on("selected", function (cfiRange, contents) {
+            rendition.annotations.remove(cfiRange, "highlight");
             rendition.annotations.highlight(
                 cfiRange, 
                 {}, 
-                (e) => {console.log("highlight clicked", e.target)}, 
+                (e) => {console.log("highlight clicked", e.target)},
                 "hl", 
                 { "fill": "yellow", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
             );
@@ -65,20 +65,12 @@ class Reader extends Component {
 
         rendition.on("selected", function (cfiRange) {
 
-            // rendition.annotations.add("highlight", cfiRange, {}, (e) => { console.log("highlight clickity", e.target); }, "hl", { "fill": "red", "fill-opacity": "0.3", "mix-blend-mode": "multiply" })
-
             rendition.book.getRange(cfiRange).then(function (range) {
                 var text;
                 
                 if (range) {
                     text = range.toString();
-
-                    // let highlight = 
-                    //     <li>
-                    //         <a href={`#${cfiRange}`} onClick={() => rendition.display(cfiRange)}>{cfiRange}</a>
-                    //         {text}
-                    //         <a href={`#${cfiRange}`} onClick={() => { console.log(rendition.annotations); rendition.annotations.remove(cfiRange); return false; }}>remove</a>
-                    //     </li>
+                    console.log(typeof cfiRange)
 
                     let highlight = {
                         id: Math.random(),
@@ -117,6 +109,7 @@ class Reader extends Component {
                 storage && storage.setItem("epub-location", location);
             }
         );
+        console.log(this.state.location)
     };
 
     render() {
@@ -130,7 +123,6 @@ class Reader extends Component {
                     locationChanged={this.onLocationChanged}
                     getRendition={this.getRendition}
                 />
-                {/* <button style={{ position: "absolute", top: "5px", zIndex: "1"}} onClick={this.onToggleFontSize} ></button> */}
             </div>
         );
     }
