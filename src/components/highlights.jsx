@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchHighlights, deleteHighlight } from './actions/highlights_actions'
+import { fetchHighlights, deleteHighlight } from '../actions/highlights_actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faEye } from '@fortawesome/free-solid-svg-icons'
-import { fetchRendition } from './actions/rendition_actions'
+import { fetchRendition } from '../actions/rendition_actions'
 
 
 const mapStateToProps = ({ entities }) => {
@@ -23,6 +23,8 @@ const mapDispatchToProps = dispatch => {
 
 
 function Highlights({ highlights, fetchHighlights, deleteHighlight, rendition, fetchRendition }) {
+    const [rgba, setRgba] = useState("rgba(255,255,0, 0.3)")
+    const [color, setColor] = useState("yellow")
     const [toggle, setToggle] = useState(false)
     const [visible, setVisible] = useState(false)
     const [settings, setSettings] = useState(false)
@@ -40,7 +42,7 @@ function Highlights({ highlights, fetchHighlights, deleteHighlight, rendition, f
         if (highlights.length) {
             setVisible(!visible);
             highlights.forEach(highlight => {
-                const { rendition, cfiRange } = highlight;
+                const { cfiRange } = highlight;
                 rendition.annotations.remove(cfiRange, "highlight");
                 rendition.annotations.highlight(
                     cfiRange,
@@ -54,6 +56,8 @@ function Highlights({ highlights, fetchHighlights, deleteHighlight, rendition, f
     };
 
     const setHighlightsColor = (color, rgba) => {
+        setColor(color)
+        setRgba(rgba)
         rendition.on("selected", function (cfiRange, contents) {
             rendition.annotations.remove(cfiRange, "highlight");
             rendition.annotations.highlight(
@@ -74,7 +78,7 @@ function Highlights({ highlights, fetchHighlights, deleteHighlight, rendition, f
 
         if (highlights.length) {
             highlights.forEach(highlight => {
-                const { rendition, cfiRange } = highlight;
+                const { cfiRange } = highlight;
                 rendition.annotations.remove(cfiRange, "highlight");
                 rendition.annotations.highlight(
                     cfiRange,
@@ -90,10 +94,11 @@ function Highlights({ highlights, fetchHighlights, deleteHighlight, rendition, f
     const setTextSize = (e) => {
         setFontSize(e.target.value)
         rendition.themes.fontSize(String(fontSize) + "%");
+        setHighlightsColor(color, rgba)
     }
 
     const highlightList = highlights.length ? (
-        highlights.map(({ id, text, cfiRange, rendition }, i) => {
+        highlights.map(({ id, text, cfiRange }, i) => {
             return (
                 <div className="annotation" key={i}>
                     <a href={`#${cfiRange}`} onClick={() => rendition.display(cfiRange)}>Go to:</a>

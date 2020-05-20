@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { ReactReader } from "react-reader";
 import { connect } from 'react-redux';
-import { createHighlight, fetchHighlights } from './actions/highlights_actions'
-import { createRendition } from './actions/rendition_actions'
+import { createHighlight, fetchHighlights } from '../actions/highlights_actions'
+import { createRendition } from '../actions/rendition_actions'
 
 const storage = global.localStorage || null;
 
@@ -70,13 +70,11 @@ class Reader extends Component {
                 
                 if (range) {
                     text = range.toString();
-                    console.log(typeof cfiRange)
 
                     let highlight = {
                         id: Math.random(),
                         text,
                         cfiRange,
-                        rendition,
                     }
 
                     handleHighlight(highlight)

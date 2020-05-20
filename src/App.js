@@ -1,7 +1,7 @@
 import React from 'react';
-import Reader from './reader'
-import Highlights from './highlights'
-import './App.css';
+import Reader from './components/reader'
+import Highlights from './components/highlights'
+import './assests/App.css';
 
 function App() {
   return (
