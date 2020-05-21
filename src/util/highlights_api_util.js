@@ -29,3 +29,6 @@ export const createHighlight = (data) => {
     )
 }
 
+export const deleteHighlight = (id) => {
+    return axios.delete(`http://localhost:3001/api/highlights/${id}`)
+}
