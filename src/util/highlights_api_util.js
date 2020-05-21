@@ -13,7 +13,7 @@ export const fetchHighlights = () => {
 };
 
 export const createHighlight = (data) => {
-    const response = axios.post('http://localhost:3001/api/highlights', 
+    return axios.post('http://localhost:3001/api/highlights', 
         {
             highlight: {
                 text: data.text,
@@ -27,6 +27,5 @@ export const createHighlight = (data) => {
             ],
         }
     )
-
-    return response
 }
+
