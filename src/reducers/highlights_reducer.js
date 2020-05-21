@@ -8,9 +8,8 @@ const highlightsReducer = (state = [], action) => {
         case RECEIVE_HIGHLIGHTS:
             return action.highlights
         case REMOVE_HIGHLIGHT:
-            let newState = Object.assign({}, state)
-            delete newState[action.id]
-            return newState
+            let newState = Object.assign([], state)
+            return newState.filter(highlight => highlight.id !== action.id)
         default:
             return state;
     }

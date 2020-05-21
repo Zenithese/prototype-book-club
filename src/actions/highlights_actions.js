@@ -41,5 +41,7 @@ export const fetchHighlights = () => dispatch => {
 };
 
 export const deleteHighlight = (id) => dispatch => {
-    return dispatch(removeHighlight(id));
+    return APIUtil.deleteHighlight(id).then(response => 
+        dispatch(removeHighlight(response.data.id))
+    )
 };
