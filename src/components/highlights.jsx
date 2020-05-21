@@ -8,7 +8,7 @@ import { fetchRendition } from '../actions/rendition_actions'
 
 const mapStateToProps = ({ entities }) => {
     return {
-        highlights: Object.values(entities.highlights),
+        highlights: entities.highlights,
         rendition: entities.rendition.rendition
     }
 }
@@ -29,6 +29,7 @@ function Highlights({ highlights, fetchHighlights, deleteHighlight, rendition, f
     const [visible, setVisible] = useState(false)
     const [settings, setSettings] = useState(false)
     const [fontSize, setFontSize] = useState(100)
+    // const [boot, setBoot] = useState(true)
 
     useEffect(() => {
         fetchHighlights();
@@ -36,6 +37,23 @@ function Highlights({ highlights, fetchHighlights, deleteHighlight, rendition, f
 
     useEffect(() => {
         fetchRendition()
+
+        const pastHighlights = () => {
+            if (highlights.length) {
+                highlights.forEach(highlight => {
+                    const { cfiRange } = highlight;
+                    rendition.annotations.highlight(
+                        cfiRange,
+                        {},
+                        (e) => { console.log("highlight clicked", e.target) },
+                        "hl",
+                        { "fill": "yellow", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
+                    );
+                });
+            }
+        }
+
+        if (rendition) pastHighlights()
     }, [rendition, fetchRendition])
 
     const toggleHighlights = () => {

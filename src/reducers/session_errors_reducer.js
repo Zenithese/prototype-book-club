@@ -9,7 +9,7 @@ export default (state = [], action) => {
     switch (action.type) {
         case RECEIVE_SESSION_ERRORS:
             let response;
-            action.errors == undefined ? response = null : response = action.errors; // for now
+            action.errors === undefined ? response = null : response = action.errors; // for now
             return response;
         case RECEIVE_CURRENT_USER:
             return [];

@@ -72,7 +72,6 @@ class Reader extends Component {
                     text = range.toString();
 
                     let highlight = {
-                        id: Math.random(),
                         text,
                         cfiRange,
                     }
@@ -84,18 +83,6 @@ class Reader extends Component {
 
         });
 
-    };
-
-    onToggleFontSize = () => {
-        const nextState = !this.state.largeText;
-        this.setState(
-            {
-                largeText: nextState
-            },
-            () => {
-                this.rendition.themes.fontSize(nextState ? "140%" : "100%");
-            }
-        );
     };
 
     onLocationChanged = location => {
