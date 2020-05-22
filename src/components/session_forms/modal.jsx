@@ -1,6 +1,7 @@
 import React from 'react';
 import { closeModal } from '../../actions/modal_actions';
 import { connect } from 'react-redux';
+import { AuthRoute } from '../../util/route_util';
 import LoginFormContainer from "./login_form_container";
 import SignupFormContainer from './signup_form_container';
 
@@ -11,10 +12,10 @@ function Modal({ modal, closeModal }) {
     let component;
     switch (modal) {
         case 'login':
-            component = <LoginFormContainer />
+            component = <AuthRoute exact path="/" component={LoginFormContainer} />
             break;
         case 'signup':
-            component = <SignupFormContainer />
+            component = <AuthRoute exact path="/" component={SignupFormContainer} />
             break;
         default:
             return null;
