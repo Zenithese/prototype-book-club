@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-const Greeting = ({ currentUser, logout, openModal }) => {
+const Greeting = ({ currentUser, getCurrentUser, openModal }) => {
+    useEffect(() => {
+        getCurrentUser();
+    }, [])
+
     const sessionLinks = () => (
         <div className="greeting-background">
             <div className="greeting-child">
@@ -15,6 +19,7 @@ const Greeting = ({ currentUser, logout, openModal }) => {
 
     );
 
+    console.log(currentUser)
     return currentUser ? null : sessionLinks();
 };
 

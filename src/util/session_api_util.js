@@ -1,19 +1,27 @@
+import axios from 'axios'
 var $ = require('jquery');
 
 export const login = user => {
-    return $.ajax({
-        method: 'POST',
-        url: 'http://localhost:3001/api/session',
-        data: { user }
-    })
+    return axios.post(
+        'http://localhost:3001/api/session', 
+        { user }, 
+        { withCredentials: true }
+    )
 };
 
+export const getCurrentUser = () => {
+    return axios.get(
+        'http://localhost:3001/api/session', 
+        { withCredentials: true }
+    )
+}
+
 export const signup = user => {
-    return $.ajax({
-        method: 'POST',
-        url: 'http://localhost:3001/api/users',
-        data: { user }
-    })
+    return axios.post(
+        'http://localhost:3001/api/users', 
+        { user }, 
+        { withCredentials: true }
+    )
 };
 
 export const logout = () => (
