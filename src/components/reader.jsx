@@ -3,6 +3,7 @@ import { ReactReader } from "react-reader";
 import { connect } from 'react-redux';
 import { createHighlight, fetchHighlights } from '../actions/highlights_actions'
 import { createRendition } from '../actions/rendition_actions'
+import { fetchBook } from '../actions/books_actions'
 
 const storage = global.localStorage || null;
 
@@ -10,13 +11,14 @@ const mapDispatchToProps = dispatch => {
     return {
         createHighlight: (highlight) => dispatch(createHighlight(highlight)),
         fetchHighlights: () => dispatch(fetchHighlights()),
-        createRendition: (rendition) => dispatch(createRendition(rendition))
+        createRendition: (rendition) => dispatch(createRendition(rendition)),
+        fetchBook: () => dispatch(fetchBook()),
     };
 };
 
 const mapStateToProps = ({ entities }) => {
     return {
-        highlights: Object.values(entities.highlights)
+        highlights: Object.values(entities.highlights),
     }
 }
 
@@ -33,6 +35,10 @@ class Reader extends Component {
             localName: null,
         };
         this.rendition = null;
+    }
+
+    componentWillMount() {
+        this.props.receiveBook();
     }
 
     getRendition = rendition => {
