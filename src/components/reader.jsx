@@ -103,7 +103,7 @@ class Reader extends Component {
             <div style={{ position: "relative", height: "100%" }}>
                 <ReactReader
                     url={"/alice.epub"}
-                    title={"Alice in wonderland"}
+                    title={"Alice in Wonderland"}
                     location={location}
                     locationChanged={this.onLocationChanged}
                     getRendition={this.getRendition}
