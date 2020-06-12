@@ -19,6 +19,7 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = ({ entities }) => {
     return {
         highlights: Object.values(entities.highlights),
+        book: entities.books.book
     }
 }
 
@@ -38,7 +39,7 @@ class Reader extends Component {
     }
 
     componentWillMount() {
-        this.props.receiveBook();
+        this.props.fetchBook();
     }
 
     getRendition = rendition => {
@@ -105,10 +106,11 @@ class Reader extends Component {
 
     render() {
         const { location } = this.state;
+        console.log(location)
         return (
             <div style={{ position: "relative", height: "100%" }}>
                 <ReactReader
-                    url={"/alice.epub"}
+                    url={this.props.book}
                     title={"Alice in Wonderland"}
                     location={location}
                     locationChanged={this.onLocationChanged}

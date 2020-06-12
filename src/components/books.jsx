@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { createBook } from '../actions/books_actions'
 
 const mapStateToProps = ({ entities }) => {
@@ -36,14 +36,17 @@ function Books({ createBook }) {
 
     const handleClick = (url) => {
         createBook(url)
-        // <Route to={`${book.url}`/>
     }
 
     const booksList = 
         books.map((book, i) => {
             return (
-                <div onClick={() => handleClick(book.url)} key={i}>
-                    {book.title}
+                <div>
+                    <Link to={`${book.url}`} onClick={() => handleClick(book.url)} key={i}>
+                        <img style={{width:"200px"}}src="/cm.jpg"/>
+                        <br/>
+                        {book.title}
+                    </Link>
                 </div>
             )
         })
