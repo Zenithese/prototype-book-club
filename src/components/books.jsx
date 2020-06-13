@@ -52,10 +52,10 @@ function Books({ createBook }) {
         books.map((book, i) => {
             return (
                 <div className="book-container">
-                    <Link to={`${book.url}`} onClick={() => handleClick(book)} key={i}>
+                    <Link className="book-link" to={`${book.url}`} onClick={() => handleClick(book)} key={i}>
                         <img className="book-image" src={book.image}/>
                         <br/>
-                        {book.title}
+                        <div className="book-title">{book.title}</div>
                     </Link>
                 </div>
             )
