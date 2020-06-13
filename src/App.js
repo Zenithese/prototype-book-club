@@ -18,7 +18,7 @@ function App() {
         <ProtectedRoute path="/" component={Books} />
         {/* <ProtectedRoute path="/" component={Reader} /> */}
       </Switch>
-      <ProtectedRoute path="/" component={Highlights} />
+      <ProtectedRoute path="/:book" component={Highlights} />
     </div>
   );
 }
