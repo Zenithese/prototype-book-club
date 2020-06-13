@@ -1,10 +1,10 @@
 export const STORE_BOOK = "STORE_BOOK"
 export const RECEIVE_BOOK = "RECEIVE_BOOK"
 
-const storeBook = (bookId) => {
+const storeBook = (book) => {
     return {
         type: STORE_BOOK,
-        bookId,
+        book,
     }
 }
 
@@ -14,8 +14,8 @@ const receiveBook = () => {
     }
 }
 
-export const createBook = (bookId) => dispatch => {
-    return dispatch(storeBook(bookId))
+export const createBook = (book) => dispatch => {
+    return dispatch(storeBook(book))
 }
 
 export const fetchBook = () => dispatch => {

@@ -109,8 +109,8 @@ class Reader extends Component {
         return (
             <div style={{ position: "relative", height: "100%" }}>
                 <ReactReader
-                    url={this.props.book}
-                    title={"Alice in Wonderland"}
+                    url={this.props.book.url}
+                    title={this.props.book.title}
                     location={location}
                     locationChanged={this.onLocationChanged}
                     getRendition={this.getRendition}

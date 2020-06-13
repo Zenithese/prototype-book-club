@@ -11,7 +11,7 @@ const mapStateToProps = ({ entities }) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        createBook: (bookId) => dispatch(createBook(bookId)),
+        createBook: (book) => dispatch(createBook(book)),
     };
 };
 
@@ -52,7 +52,7 @@ function Books({ createBook }) {
         books.map((book, i) => {
             return (
                 <div className="book-container">
-                    <Link to={`${book.url}`} onClick={() => handleClick(book.url)} key={i}>
+                    <Link to={`${book.url}`} onClick={() => handleClick(book)} key={i}>
                         <img className="book-image" src={book.image}/>
                         <br/>
                         {book.title}

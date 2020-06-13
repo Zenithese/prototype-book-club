@@ -5,7 +5,7 @@ const booksReducer = (state = {}, action) => {
     switch (action.type) {
         case STORE_BOOK:
             let newState = Object.assign({}, state)
-            newState['book'] = action.bookId
+            newState['book'] = action.book
             return newState
         case RECEIVE_BOOK:
             return Object.assign({}, state)

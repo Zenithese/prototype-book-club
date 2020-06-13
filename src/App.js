@@ -14,7 +14,7 @@ function App() {
       <Greeting />
       <Modal className="modal"/>
       <Switch>
-        <ProtectedRoute path="/:bookId" component={Reader} />
+        <ProtectedRoute path="/:book" component={Reader} />
         <ProtectedRoute path="/" component={Books} />
         {/* <ProtectedRoute path="/" component={Reader} /> */}
       </Switch>
