@@ -398,6 +398,8 @@ textarea {
 
 .book-image {
   width: 200px;
+  height: 110%;
+  object-fit: cover;
 }
 
 .book-list-container {

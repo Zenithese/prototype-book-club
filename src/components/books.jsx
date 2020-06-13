@@ -19,6 +19,7 @@ function Books({ createBook }) {
 
     const books = [
         {
+            image: "/Alice_in_Wonderland_cover.jpg",
             url: "/alice.epub",
             title: "Alice in Wonderland",
             // location: location,
@@ -26,6 +27,7 @@ function Books({ createBook }) {
             // getRendition: this.getRendition,
         },
         {
+            image: "/cm.jpg",
             url: "/karl-marx_friedrich-engels_the-communist-manifesto.epub",
             title: "Communist Manifesto",
             // location: location,
@@ -33,6 +35,7 @@ function Books({ createBook }) {
             // getRendition: this.getRendition,
         },
         {
+            image: "/frankenstein_image.jpg",
             url: "/mary-shelley_frankenstein.epub",
             title: "Frankenstein",
             // location: location,
@@ -40,6 +43,7 @@ function Books({ createBook }) {
             // getRendition: this.getRendition,
         },
         {
+            image: "/2_Cities_image.jpg",
             url: "/charles-dickens_a-tale-of-two-cities.epub",
             title: "A Tale of Two Cities",
             // location: location,
@@ -57,7 +61,7 @@ function Books({ createBook }) {
             return (
                 <div className="book-container">
                     <Link to={`${book.url}`} onClick={() => handleClick(book.url)} key={i}>
-                        <img className="book-image" src="/cm.jpg"/>
+                        <img className="book-image" src={book.image}/>
                         <br/>
                         {book.title}
                     </Link>
