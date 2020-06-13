@@ -31,6 +31,20 @@ function Books({ createBook }) {
             // location: location,
             // locationChanged: this.onLocationChanged,
             // getRendition: this.getRendition,
+        },
+        {
+            url: "/mary-shelley_frankenstein.epub",
+            title: "Frankenstein",
+            // location: location,
+            // locationChanged: this.onLocationChanged,
+            // getRendition: this.getRendition,
+        },
+        {
+            url: "/charles-dickens_a-tale-of-two-cities.epub",
+            title: "A Tale of Two Cities",
+            // location: location,
+            // locationChanged: this.onLocationChanged,
+            // getRendition: this.getRendition,
         }
     ]
 
@@ -41,9 +55,9 @@ function Books({ createBook }) {
     const booksList = 
         books.map((book, i) => {
             return (
-                <div style={{ margin: "auto" }}>
+                <div className="book-container">
                     <Link to={`${book.url}`} onClick={() => handleClick(book.url)} key={i}>
-                        <img style={{ width: "200px"}}src="/cm.jpg"/>
+                        <img className="book-image" src="/cm.jpg"/>
                         <br/>
                         {book.title}
                     </Link>
@@ -52,7 +66,7 @@ function Books({ createBook }) {
         })
 
     return (
-        <div style={{ display: "flex", flexWrap: "wrap", width: "80%", margin: "auto"}}>{booksList}</div>
+        <div className="book-list-container">{booksList}</div>
     )
 }
 

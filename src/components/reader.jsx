@@ -106,7 +106,6 @@ class Reader extends Component {
 
     render() {
         const { location } = this.state;
-        console.log(location)
         return (
             <div style={{ position: "relative", height: "100%" }}>
                 <ReactReader

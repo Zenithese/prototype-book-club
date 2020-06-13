@@ -381,6 +381,33 @@ textarea {
   margin-left: 37px;
 }
 
+.book-container {
+  margin: auto;
+  transition: 0.3s;
+  width: 35vw;
+  height: 30vw;
+  min-width: 250px;
+  min-height: 30vw;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.book-container:hover {
+  transform: scale(1.1, 1.1)
+}
+
+.book-image {
+  width: 200px;
+}
+
+.book-list-container {
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+  height: 100%;
+}
+
 /* ----epubjs css---- */
 
 /* body {
