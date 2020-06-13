@@ -23,32 +23,24 @@ function Books({ createBook }) {
             url: "/alice.epub",
             title: "Alice in Wonderland",
             // location: location,
-            // locationChanged: this.onLocationChanged,
-            // getRendition: this.getRendition,
         },
         {
             image: "/cm.jpg",
             url: "/karl-marx_friedrich-engels_the-communist-manifesto.epub",
             title: "Communist Manifesto",
             // location: location,
-            // locationChanged: this.onLocationChanged,
-            // getRendition: this.getRendition,
         },
         {
             image: "/frankenstein_image.jpg",
             url: "/mary-shelley_frankenstein.epub",
             title: "Frankenstein",
             // location: location,
-            // locationChanged: this.onLocationChanged,
-            // getRendition: this.getRendition,
         },
         {
             image: "/2_Cities_image.jpg",
             url: "/charles-dickens_a-tale-of-two-cities.epub",
             title: "A Tale of Two Cities",
             // location: location,
-            // locationChanged: this.onLocationChanged,
-            // getRendition: this.getRendition,
         }
     ]
 

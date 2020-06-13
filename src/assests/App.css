@@ -399,6 +399,7 @@ textarea {
 .book-image {
   width: 200px;
   height: 110%;
+  max-height: 295px;
   object-fit: cover;
 }
 
@@ -408,6 +409,12 @@ textarea {
   flex-wrap: wrap;
   width: 80%;
   height: 100%;
+}
+
+@media screen and (min-width: 1080px) {
+  .book-container {
+    width: 20vw;
+  }
 }
 
 /* ----epubjs css---- */
