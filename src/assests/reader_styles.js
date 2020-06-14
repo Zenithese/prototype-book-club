@@ -1,7 +1,7 @@
 export const darkTheme = {
   container: {
     overflow: "hidden",
-    height: "100%"
+    height: "100%",
   },
   readerArea: {
     position: "relative",
@@ -9,7 +9,7 @@ export const darkTheme = {
     height: "100%",
     width: "100%",
     backgroundColor: "rgb(41, 40, 40)",
-    transition: "all .3s ease"
+    transition: "all .3s ease",
   },
   containerExpaned: {
     transform: "translateX(256px)"
@@ -27,7 +27,8 @@ export const darkTheme = {
     top: 50,
     left: 50,
     bottom: 20,
-    right: 50
+    right: 50,
+    color: "red"
   },
   swipeWrapper: {
     position: "absolute",

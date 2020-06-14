@@ -62,15 +62,6 @@ class Reader extends Component {
             contents.window.getSelection().removeAllRanges();
         });
 
-        rendition.themes.default({
-            // '::selection': {
-            //     'background': 'rgba(255,255,0, 0.3)'
-            // },
-            // '.epubjs-hl': {
-            //     'fill': 'yellow', 'fill-opacity': '0.3', 'mix-blend-mode': 'multiply'
-            // },
-        });
-
         const handleHighlight = (highlight) => {
             this.props.createHighlight(highlight);
         }

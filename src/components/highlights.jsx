@@ -121,6 +121,15 @@ function Highlights({ highlights, fetchHighlights, deleteHighlight, rendition, f
         setHighlightsColor(color, rgba)
     }
 
+    const setThemeColor = (theme, textColor) => {
+        setTheme(theme)
+        rendition.themes.default({
+            'body': {
+                'color': textColor,
+            },
+        });
+    }
+
     const highlightList = highlights.length ? (
         highlights.map(({ id, text, cfiRange }, i) => {
             return (
@@ -164,7 +173,7 @@ function Highlights({ highlights, fetchHighlights, deleteHighlight, rendition, f
                 </div>
                 <br/>
                 <label className="switch" >
-                    <input type="checkbox" onClick={() => theme === "light" ? setTheme("dark") : setTheme("light")}/>
+                    <input type="checkbox" onClick={() => theme === "light" ? setThemeColor("dark", "gray") : setThemeColor("light", "black")} />
                     <span className="slider round"></span>
                 </label>    
             </div>
