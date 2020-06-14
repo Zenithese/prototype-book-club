@@ -4,6 +4,7 @@ import { fetchHighlights, deleteHighlight } from '../actions/highlights_actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faEye } from '@fortawesome/free-solid-svg-icons'
 import { fetchRendition } from '../actions/rendition_actions'
+import { createSettings } from '../actions/settings_actions'
 
 
 const mapStateToProps = ({ entities }) => {
@@ -17,23 +18,28 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchHighlights: () => dispatch(fetchHighlights()),
         deleteHighlight: (id) => dispatch(deleteHighlight(id)),
-        fetchRendition: () => dispatch(fetchRendition())
+        fetchRendition: () => dispatch(fetchRendition()),
+        createSettings: (color, fontSize, theme) => dispatch(createSettings(color, fontSize, theme))
     }
 }
 
 
-function Highlights({ highlights, fetchHighlights, deleteHighlight, rendition, fetchRendition }) {
+function Highlights({ highlights, fetchHighlights, deleteHighlight, rendition, fetchRendition, createSettings }) {
     const [rgba, setRgba] = useState("rgba(255,255,0, 0.3)")
     const [color, setColor] = useState("yellow")
     const [toggle, setToggle] = useState(false)
     const [visible, setVisible] = useState(false)
     const [settings, setSettings] = useState(false)
     const [fontSize, setFontSize] = useState(100)
-    // const [boot, setBoot] = useState(true)
+    const [theme, setTheme] = useState("light")
 
     useEffect(() => {
         fetchHighlights();
     }, [fetchHighlights])
+
+    useEffect(() => {
+        createSettings(color, fontSize, theme);
+    }, [createSettings, color, fontSize, theme])
 
     useEffect(() => {
         fetchRendition()
@@ -157,8 +163,8 @@ function Highlights({ highlights, fetchHighlights, deleteHighlight, rendition, f
                     <input type="range" min={50} max={150} value={fontSize} className="text-slider" onChange={(e) => setTextSize(e)}></input>
                 </div>
                 <br/>
-                <label className="switch">
-                    <input type="checkbox"/>
+                <label className="switch" >
+                    <input type="checkbox" onClick={() => theme === "light" ? setTheme("dark") : setTheme("light")}/>
                     <span className="slider round"></span>
                 </label>    
             </div>

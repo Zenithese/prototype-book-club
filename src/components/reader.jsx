@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { createHighlight, fetchHighlights } from '../actions/highlights_actions'
 import { createRendition } from '../actions/rendition_actions'
 import { fetchBook } from '../actions/books_actions'
+import { fetchSettings } from '../actions/settings_actions'
+import { darkTheme, lightTheme } from '../assests/reader_styles'
 
 const storage = global.localStorage || null;
 
@@ -13,13 +15,15 @@ const mapDispatchToProps = dispatch => {
         fetchHighlights: () => dispatch(fetchHighlights()),
         createRendition: (rendition) => dispatch(createRendition(rendition)),
         fetchBook: () => dispatch(fetchBook()),
+        fetchSettings: () => dispatch(fetchSettings()),
     };
 };
 
 const mapStateToProps = ({ entities }) => {
     return {
         highlights: Object.values(entities.highlights),
-        book: entities.books.book
+        book: entities.books.book,
+        theme: entities.settings.settings ? entities.settings.settings.theme : "light"
     }
 }
 
@@ -40,6 +44,7 @@ class Reader extends Component {
 
     componentWillMount() {
         this.props.fetchBook();
+        this.props.fetchSettings();
     }
 
     getRendition = rendition => {
@@ -58,9 +63,9 @@ class Reader extends Component {
         });
 
         rendition.themes.default({
-            '::selection': {
-                'background': 'rgba(255,255,0, 0.3)'
-            },
+            // '::selection': {
+            //     'background': 'rgba(255,255,0, 0.3)'
+            // },
             // '.epubjs-hl': {
             //     'fill': 'yellow', 'fill-opacity': '0.3', 'mix-blend-mode': 'multiply'
             // },
@@ -114,6 +119,7 @@ class Reader extends Component {
                     location={location}
                     locationChanged={this.onLocationChanged}
                     getRendition={this.getRendition}
+                    styles={this.props.theme === "dark" ? darkTheme : lightTheme}
                 />
             </div>
         );

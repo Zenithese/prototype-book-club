@@ -51,8 +51,8 @@ function Books({ createBook }) {
     const booksList = 
         books.map((book, i) => {
             return (
-                <div className="book-container">
-                    <Link className="book-link" to={`${book.url}`} onClick={() => handleClick(book)} key={i}>
+                <div className="book-container" key={i}>
+                    <Link className="book-link" to={`${book.url}`} onClick={() => handleClick(book)} >
                         <img className="book-image" src={book.image}/>
                         <br/>
                         <div className="book-title">{book.title}</div>
