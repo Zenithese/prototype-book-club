@@ -384,10 +384,9 @@ textarea {
 .book-container {
   margin: auto;
   transition: 0.3s;
-  width: 35vw;
   height: 30vw;
   min-width: 250px;
-  min-height: 30vw;
+  min-height: 295px;
   margin-top: 2%;
   margin-bottom: 2%;
 }
@@ -417,7 +416,7 @@ textarea {
   background-color: yellow;
   color: black;
   border-radius: 100px;
-  width: 51%;
+  width: 70%;
   margin: auto;
   opacity: .9;
 }
