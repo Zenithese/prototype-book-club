@@ -173,7 +173,7 @@ function Highlights({ highlights, fetchHighlights, deleteHighlight, rendition, f
                 </div>
                 <br/>
                 <label className="switch" >
-                    <input type="checkbox" onClick={() => theme === "light" ? setThemeColor("dark", "gray") : setThemeColor("light", "black")} />
+                    <input type="checkbox" onClick={() => theme === "light" ? setThemeColor("dark", "#999") : setThemeColor("light", "black")} />
                     <span className="slider round"></span>
                 </label>    
             </div>
