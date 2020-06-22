@@ -17,7 +17,8 @@ export const createHighlight = (data) => {
         {
             highlight: {
                 text: data.text,
-                cfi_range: data.cfiRange
+                cfi_range: data.cfiRange,
+                user_id: data.userId,
             },
         },
         {

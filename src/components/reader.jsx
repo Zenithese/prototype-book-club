@@ -21,9 +21,10 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = ({ entities }) => {
     return {
-        highlights: Object.values(entities.highlights),
+        // highlights: Object.values(entities.highlights),
         book: entities.books.book,
-        theme: entities.settings.settings ? entities.settings.settings.theme : "light"
+        theme: entities.settings.settings ? entities.settings.settings.theme : "light",
+        userId: Object.keys(entities.users)[0]
     }
 }
 
@@ -61,22 +62,24 @@ class Reader extends Component {
             );
             contents.window.getSelection().removeAllRanges();
         });
-
+        
         const handleHighlight = (highlight) => {
             this.props.createHighlight(highlight);
         }
 
-        rendition.on("selected", function (cfiRange) {
+        const userId = Number(this.props.userId);
 
+        rendition.on("selected", function (cfiRange) {
+            
             rendition.book.getRange(cfiRange).then(function (range) {
                 var text;
-                
                 if (range) {
                     text = range.toString();
-
+                    
                     let highlight = {
                         text,
                         cfiRange,
+                        userId,
                     }
 
                     handleHighlight(highlight)
