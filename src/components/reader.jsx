@@ -24,7 +24,7 @@ const mapStateToProps = ({ entities }) => {
         // highlights: Object.values(entities.highlights),
         book: entities.books.book,
         theme: entities.settings.settings ? entities.settings.settings.theme : "light",
-        userId: Object.keys(entities.users)[0]
+        userId: Object.keys(entities.users)[0],
     }
 }
 
@@ -68,6 +68,7 @@ class Reader extends Component {
         }
 
         const userId = Number(this.props.userId);
+        const bookId = 5;
 
         rendition.on("selected", function (cfiRange) {
             
@@ -80,6 +81,7 @@ class Reader extends Component {
                         text,
                         cfiRange,
                         userId,
+                        bookId
                     }
 
                     handleHighlight(highlight)

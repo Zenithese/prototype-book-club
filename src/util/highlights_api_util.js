@@ -19,6 +19,7 @@ export const createHighlight = (data) => {
                 text: data.text,
                 cfi_range: data.cfiRange,
                 user_id: data.userId,
+                book_id: data.bookId
             },
         },
         {

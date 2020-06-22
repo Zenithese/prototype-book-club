@@ -1,4 +1,4 @@
-import { STORE_BOOK, RECEIVE_BOOK } from '../actions/books_actions'
+import { STORE_BOOK, RECEIVE_BOOK, RECEIVE_BOOKS } from '../actions/books_actions'
 
 const booksReducer = (state = {}, action) => {
     Object.freeze(state);
@@ -9,6 +9,8 @@ const booksReducer = (state = {}, action) => {
             return newState
         case RECEIVE_BOOK:
             return Object.assign({}, state)
+        case RECEIVE_BOOKS:
+            return action.books
         default:
             return state;
     }
