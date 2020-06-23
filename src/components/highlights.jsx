@@ -7,10 +7,10 @@ import { fetchRendition } from '../actions/rendition_actions'
 import { createSettings } from '../actions/settings_actions'
 
 
-const mapStateToProps = ({ entities }) => {
+const mapStateToProps = ({ entities, session }) => {
     return {
-        highlights: entities.highlights,
-        rendition: entities.rendition.rendition
+        highlights: entities.highlights.filter(highlight => highlight.userId === session.id && highlight.bookId === entities.books.book.id),
+        rendition: entities.rendition.rendition,
     }
 }
 

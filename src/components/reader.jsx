@@ -68,8 +68,8 @@ class Reader extends Component {
         }
 
         const userId = Number(this.props.userId);
-        const bookId = 5;
-
+        const bookId = this.props.book.id;
+        
         rendition.on("selected", function (cfiRange) {
             
             rendition.book.getRange(cfiRange).then(function (range) {
@@ -110,7 +110,7 @@ class Reader extends Component {
         return (
             <div style={{ position: "relative", height: "100%" }}>
                 <ReactReader
-                    url={this.props.book.url}
+                    url={this.props.book.epubFile}
                     title={this.props.book.title}
                     location={location}
                     locationChanged={this.onLocationChanged}

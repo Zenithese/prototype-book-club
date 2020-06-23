@@ -31,7 +31,7 @@ function Books({ fetchBooks, createBook, books }) {
             books.map((book) => {
                 return (
                     <div className="book-container" key={book.id}>
-                        <Link className="book-link" to={`${book.url}`} onClick={() => handleClick(book)} >
+                        <Link className="book-link" to={`${book.epubFile}`} onClick={() => handleClick(book)} >
                             <img className="book-image" src={book.image}/>
                             <br/>
                             <div className="book-title">{book.title}</div>
