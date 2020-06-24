@@ -24,9 +24,16 @@ export const signup = user => {
     )
 };
 
-export const logout = () => (
-    $.ajax({
-        method: 'DELETE',
-        url: '/api/session'
-    })
-);
+// export const logout = () => (
+//     $.ajax({
+//         method: 'DELETE',
+//         url: 'http://localhost:3001/api/session'
+//     })
+// );
+
+export const logout = () => {
+    return axios.delete(
+        'http://localhost:3001/api/session',
+        { withCredentials: true }
+    )
+};

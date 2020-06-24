@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom'
+import { logout } from './actions/session_actions'
 import configureStore from './store'
 import './assests/index.css';
 import App from './App';
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.getState = store.getState;
   window.dispatch = store.dispatch;
   window.getProps = store.getProps;
+  window.logout = logout();
   
   ReactDOM.render(
     <Provider store={store}>
