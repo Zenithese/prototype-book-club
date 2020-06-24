@@ -1,5 +1,4 @@
 import axios from 'axios'
-var $ = require('jquery');
 
 export const login = user => {
     return axios.post(
@@ -23,13 +22,6 @@ export const signup = user => {
         { withCredentials: true }
     )
 };
-
-// export const logout = () => (
-//     $.ajax({
-//         method: 'DELETE',
-//         url: 'http://localhost:3001/api/session'
-//     })
-// );
 
 export const logout = () => {
     return axios.delete(
