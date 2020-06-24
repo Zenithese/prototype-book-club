@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios from 'axios';
+import humps from 'humps';
 
 export const login = user => {
     return axios.post(
@@ -9,9 +10,14 @@ export const login = user => {
 };
 
 export const getCurrentUser = () => {
-    return axios.get(
-        'http://localhost:3001/api/session', 
-        { withCredentials: true }
+    return axios.get('http://localhost:3001/api/session', 
+        {
+            withCredentials: true,
+            transformResponse: [
+                ...axios.defaults.transformResponse,
+                data => humps.camelizeKeys(data)
+            ],
+        },
     )
 }
 

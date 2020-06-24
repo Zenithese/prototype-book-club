@@ -11,6 +11,9 @@ const mapStateToProps = ({ entities, session }) => {
     return {
         highlights: entities.highlights.filter(highlight => highlight.userId === session.id && highlight.bookId === entities.books.book.id),
         rendition: entities.rendition.rendition,
+        _fontSize: entities.users[session.id].fontSize,
+        highlightColor: entities.users[session.id].highlightColor,
+        _theme: entities.users[session.id].theme
     }
 }
 
@@ -24,15 +27,16 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-function Highlights({ highlights, fetchHighlights, deleteHighlight, rendition, fetchRendition, createSettings }) {
+function Highlights({ highlights, _fontSize, highlightColor, _theme, fetchHighlights, deleteHighlight, rendition, fetchRendition, createSettings }) {
     const [rgba, setRgba] = useState("rgba(255,255,0, 0.3)")
-    const [color, setColor] = useState("yellow")
+    const [color, setColor] = useState(highlightColor)
     const [toggle, setToggle] = useState(false)
     const [visible, setVisible] = useState(false)
     const [settings, setSettings] = useState(false)
-    const [fontSize, setFontSize] = useState(100)
-    const [theme, setTheme] = useState("light")
+    const [fontSize, setFontSize] = useState(Number(_fontSize))
+    const [theme, setTheme] = useState(_theme)
 
+    console.log("props.highlightColor:", highlightColor)
     useEffect(() => {
         fetchHighlights();
     }, [fetchHighlights])
