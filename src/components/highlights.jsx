@@ -36,7 +36,6 @@ function Highlights({ highlights, _fontSize, highlightColor, _theme, fetchHighli
     const [fontSize, setFontSize] = useState(Number(_fontSize))
     const [theme, setTheme] = useState(_theme)
 
-    console.log("props.highlightColor:", highlightColor)
     useEffect(() => {
         fetchHighlights();
     }, [fetchHighlights])
@@ -48,6 +47,14 @@ function Highlights({ highlights, _fontSize, highlightColor, _theme, fetchHighli
     useEffect(() => {
         fetchRendition()
 
+        if (theme === "dark" && rendition) {
+            rendition.themes.default({
+                'body': {
+                    'color': "#999",
+                },
+            });
+        };
+
         const pastHighlights = () => {
             if (highlights.length) {
                 highlights.forEach(highlight => {
@@ -57,7 +64,7 @@ function Highlights({ highlights, _fontSize, highlightColor, _theme, fetchHighli
                         {},
                         (e) => { console.log("highlight clicked", e.target) },
                         "hl",
-                        { "fill": "yellow", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
+                        { "fill": color, "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
                     );
                 });
             }
@@ -77,7 +84,7 @@ function Highlights({ highlights, _fontSize, highlightColor, _theme, fetchHighli
                     {},
                     (e) => { console.log("highlight clicked", e.target) },
                     "hl",
-                    { "fill": visible ? "yellow" : "transparent", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
+                    { "fill": visible ? color : "transparent", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
                 );
             });
         };
@@ -93,7 +100,7 @@ function Highlights({ highlights, _fontSize, highlightColor, _theme, fetchHighli
                 {},
                 (e) => { console.log("highlight clicked", e.target) },
                 "hl",
-                { "fill": color, "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
+                { "fill": !visible ? color : "transparent", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
             );
             contents.window.getSelection().removeAllRanges();
         });
@@ -113,7 +120,7 @@ function Highlights({ highlights, _fontSize, highlightColor, _theme, fetchHighli
                     {},
                     (e) => { console.log("highlight clicked", e.target) },
                     "hl",
-                    { "fill": color, "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
+                    { "fill": !visible ? color : "transparent", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
                 );
             });
         };
@@ -122,7 +129,7 @@ function Highlights({ highlights, _fontSize, highlightColor, _theme, fetchHighli
     const setTextSize = (e) => {
         setFontSize(e.target.value)
         rendition.themes.fontSize(String(fontSize) + "%");
-        setHighlightsColor(color, rgba)
+        if (!visible) setHighlightsColor(color, rgba)
     }
 
     const setThemeColor = (theme, textColor) => {
