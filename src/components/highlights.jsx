@@ -72,8 +72,8 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
         }
 
         if (rendition) {
-            pastHighlights();
             rendition.themes.fontSize(String(fontSize) + "%");
+            pastHighlights();
         }
     }, [rendition, fetchRendition])
 
