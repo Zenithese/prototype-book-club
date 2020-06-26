@@ -13,7 +13,8 @@ const mapStateToProps = ({ entities, session }) => {
         rendition: entities.rendition.rendition,
         _fontSize: entities.users[session.id].fontSize,
         highlightColor: entities.users[session.id].highlightColor,
-        _theme: entities.users[session.id].theme
+        _theme: entities.users[session.id].theme,
+        id: session.id
     }
 }
 
@@ -22,12 +23,12 @@ const mapDispatchToProps = dispatch => {
         fetchHighlights: () => dispatch(fetchHighlights()),
         deleteHighlight: (id) => dispatch(deleteHighlight(id)),
         fetchRendition: () => dispatch(fetchRendition()),
-        createSettings: (color, fontSize, theme) => dispatch(createSettings(color, fontSize, theme))
+        createSettings: (id, color, fontSize, theme) => dispatch(createSettings(id, color, fontSize, theme))
     }
 }
 
 
-function Highlights({ highlights, _fontSize, highlightColor, _theme, fetchHighlights, deleteHighlight, rendition, fetchRendition, createSettings }) {
+function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHighlights, deleteHighlight, rendition, fetchRendition, createSettings }) {
     const [rgba, setRgba] = useState("rgba(255,255,0, 0.3)")
     const [color, setColor] = useState(highlightColor)
     const [toggle, setToggle] = useState(false)
@@ -41,8 +42,8 @@ function Highlights({ highlights, _fontSize, highlightColor, _theme, fetchHighli
     }, [fetchHighlights])
 
     useEffect(() => {
-        createSettings(color, fontSize, theme);
-    }, [createSettings, color, fontSize, theme])
+        createSettings(id, color, fontSize, theme);
+    }, [createSettings, id, color, fontSize, theme])
 
     useEffect(() => {
         fetchRendition()

@@ -18,8 +18,8 @@ const receiveSettings = () => {
     }
 }
 
-export const createSettings = (color, fontSize, theme) => dispatch => {
-    return APIUtil.updateSettings(color, fontSize, theme).then(settings => {
+export const createSettings = (id, color, fontSize, theme) => dispatch => {
+    return APIUtil.updateSettings(id, color, fontSize, theme).then(settings => {
         const { highlightColor, fontSize, theme } = settings.data
         dispatch(storeSettings(highlightColor, fontSize, theme))
     })

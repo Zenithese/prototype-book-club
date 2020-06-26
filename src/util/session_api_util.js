@@ -29,9 +29,9 @@ export const signup = user => {
     )
 };
 
-export const updateSettings = (color, fontSize, theme) => {
+export const updateSettings = (id, color, fontSize, theme) => {
     return axios.patch(
-        'http://localhost:3001/api/users/1',
+        `http://localhost:3001/api/users/${id}`,
         { highlight_color: color, font_size: fontSize, theme },
         {
             withCredentials: true,
