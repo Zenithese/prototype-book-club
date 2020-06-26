@@ -3,12 +3,12 @@ import * as APIUtil from '../util/session_api_util';
 export const STORE_SETTINGS = "STORE_SETTINGS"
 export const RECEIVE_SETTINGS = "RECEIVE_SETTINGS"
 
-const storeSettings = (settings) => {
+const storeSettings = (highlightColor, fontSize, theme) => {
     return {
         type: STORE_SETTINGS,
-        color: settings.highlight_color,
-        fontSize: settings.font_size,
-        theme: settings.theme,
+        highlightColor, 
+        fontSize, 
+        theme
     }
 }
 
@@ -18,13 +18,10 @@ const receiveSettings = () => {
     }
 }
 
-// export const createSettings = (color, fontSize, theme) => dispatch => {
-//     return dispatch(storeSettings(color, fontSize, theme))
-// }
-
 export const createSettings = (color, fontSize, theme) => dispatch => {
     return APIUtil.updateSettings(color, fontSize, theme).then(settings => {
-        dispatch(storeSettings(settings))
+        const { highlightColor, fontSize, theme } = settings.data
+        dispatch(storeSettings(highlightColor, fontSize, theme))
     })
 }
 

@@ -5,7 +5,7 @@ const settingsReducer = (state = {}, action) => {
     switch (action.type) {
         case STORE_SETTINGS:
             let newState = Object.assign({}, state)
-            newState['settings'] = {color: action.color, fontSize: action.fontSize, theme: action.theme}
+            newState['settings'] = {highlightColor: action.highlightColor, fontSize: action.fontSize, theme: action.theme}
             return newState
         case RECEIVE_SETTINGS:
             return Object.assign({}, state)
