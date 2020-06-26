@@ -70,7 +70,10 @@ function Highlights({ highlights, _fontSize, highlightColor, _theme, fetchHighli
             }
         }
 
-        if (rendition) pastHighlights()
+        if (rendition) {
+            pastHighlights();
+            rendition.themes.fontSize(String(fontSize) + "%");
+        }
     }, [rendition, fetchRendition])
 
     const toggleHighlights = () => {
