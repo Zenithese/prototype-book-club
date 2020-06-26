@@ -3,7 +3,7 @@ import { ReactReader } from "react-reader";
 import { connect } from 'react-redux';
 import { createHighlight, fetchHighlights } from '../actions/highlights_actions'
 import { createRendition } from '../actions/rendition_actions'
-import { fetchBook } from '../actions/books_actions'
+import { fetchBook, updateBook } from '../actions/books_actions'
 import { fetchSettings } from '../actions/settings_actions'
 import { darkTheme, lightTheme } from '../assests/reader_styles'
 
@@ -16,6 +16,7 @@ const mapDispatchToProps = dispatch => {
         createRendition: (rendition) => dispatch(createRendition(rendition)),
         fetchBook: () => dispatch(fetchBook()),
         fetchSettings: () => dispatch(fetchSettings()),
+        updateBook: (id, location) => dispatch(updateBook(id, location))
     };
 };
 
@@ -33,10 +34,11 @@ class Reader extends Component {
         super(props);
         this.state = {
             fullscreen: false,
-            location:
-                storage && storage.getItem("epub-location")
-                    ? storage.getItem("epub-location")
-                    : 2,
+            // location:
+            //     storage && storage.getItem("epub-location")
+            //         ? storage.getItem("epub-location")
+            //         : 2,
+            location: this.props.book.location,
             localFile: null,
             localName: null,
         };
@@ -94,6 +96,7 @@ class Reader extends Component {
     };
 
     onLocationChanged = location => {
+        debugger
         this.setState(
             {
                 location
@@ -102,11 +105,13 @@ class Reader extends Component {
                 storage && storage.setItem("epub-location", location);
             }
         );
-        console.log(this.state.location)
+        // console.log(this.state.location)
+        this.props.updateBook(this.props.book.id, this.state.location)
     };
 
     render() {
         const { location } = this.state;
+        console.log(location)
         return (
             <div style={{ position: "relative", height: "100%" }}>
                 <ReactReader

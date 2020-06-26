@@ -11,3 +11,11 @@ export const fetchBooks = () => {
         }
     )
 };
+
+export const updateBook = (id, location) => {
+    return axios.patch(
+        `http://localhost:3001/api/books/${id}`,
+        { location: location },
+        { withCredentials: true }
+    ).then(book => book.data)
+}

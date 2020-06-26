@@ -37,3 +37,9 @@ export const fetchBooks = () => dispatch => {
         dispatch(receiveBooks(books.data))
     }) 
 }
+
+export const updateBook = (id, location) => dispatch => {
+    return APIUtil.updateBook(id, location).then(book => {
+        dispatch(storeBook(book))
+    })
+}
