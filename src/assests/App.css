@@ -417,6 +417,7 @@ textarea {
   color: black;
   border-radius: 100px;
   width: 70%;
+  max-width: 167px;
   margin: auto;
   opacity: .9;
 }
