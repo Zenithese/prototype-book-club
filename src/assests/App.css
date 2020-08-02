@@ -30,7 +30,7 @@
   overflow: hidden;
   transition: 0.5s;
   opacity: .9;
-  border-radius: 17px;
+  border-radius: 100%;
   cursor: pointer;
   /* transition: height .2s ease-out; */
   /* opacity: 0; */
@@ -47,7 +47,7 @@
   overflow: hidden;
   transition: 0.5s;
   opacity: .9;
-  border-radius: 17px;
+  border-radius: 100%;
   cursor: pointer;
 }
 
@@ -62,7 +62,7 @@
   overflow: hidden;
   transition: 0.5s;
   opacity: .9;
-  border-radius: 17px;
+  border-radius: 100%;
   cursor: pointer;
 }
 
@@ -77,7 +77,7 @@
   overflow: hidden;
   transition: 0.5s;
   opacity: .9;
-  border-radius: 17px;
+  border-radius: 100%;
   cursor: pointer;
   /* transition: height .2s ease-out; */
   /* opacity: 0; */
@@ -96,7 +96,7 @@
   opacity: .9; */
   height: 20vh;
   width: 20vh;
-  border-radius: 100px; 
+  border-radius: 100%; 
   position: fixed;
   z-index: 1;
   top: 0;
@@ -118,7 +118,7 @@
   overflow: hidden;
   transition: 0.5s;
   opacity: .9;
-  border-radius: 17px;
+  border-radius: 100%;
   cursor: pointer;
 }
 
@@ -147,7 +147,7 @@
   background-color: yellow;
   transition: 0.5s;
   opacity: .9;
-  border-radius: 17px;
+  border-radius: 100%;
   cursor: pointer;
   margin: auto;
   z-index: 2;
@@ -159,7 +159,7 @@
   background-color: lightgreen;
   transition: 0.5s;
   opacity: .9;
-  border-radius: 17px;
+  border-radius: 100%;
   cursor: pointer;
   margin: auto;
   z-index: 2;
@@ -171,7 +171,7 @@
   background-color: blue;
   transition: 0.5s;
   opacity: .9;
-  border-radius: 17px;
+  border-radius: 100%;
   cursor: pointer;
   margin: auto;
   z-index: 2;
@@ -183,7 +183,7 @@
   background-color: red;
   transition: 0.5s;
   opacity: .9;
-  border-radius: 17px;
+  border-radius: 100%;
   cursor: pointer;
   margin: auto;
   z-index: 2;
@@ -195,7 +195,7 @@
   background-color: purple;
   transition: 0.5s;
   opacity: .9;
-  border-radius: 17px;
+  border-radius: 100%;
   cursor: pointer;
   margin: auto;
   z-index: 2;
@@ -279,7 +279,7 @@ input:checked + .slider:before {
   overflow: hidden;
   transition: 0.5s;
   opacity: .9;
-  border-radius: 17px;
+  border-radius: 100%;
 }
 
 .annotations-closed-for-settings {
@@ -293,7 +293,7 @@ input:checked + .slider:before {
   overflow: hidden;
   transition: 0.5s;
   opacity: .9;
-  border-radius: 17px;
+  border-radius: 100%;
   cursor: pointer;
 }
 
@@ -308,7 +308,7 @@ input:checked + .slider:before {
   overflow: hidden;
   transition: 0.5s;
   opacity: .9;
-  border-radius: 17px;
+  border-radius: 100%;
   cursor: pointer;
 }
 
@@ -415,7 +415,7 @@ textarea {
   top: -40px;
   background-color: yellow;
   color: black;
-  border-radius: 100px;
+  border-radius: 17px;
   width: 70%;
   max-width: 175px;
   margin: auto;
