@@ -96,7 +96,6 @@ class Reader extends Component {
     };
 
     onLocationChanged = location => {
-        debugger
         this.setState(
             {
                 location
@@ -111,7 +110,6 @@ class Reader extends Component {
 
     render() {
         const { location } = this.state;
-        console.log(location)
         return (
             <div style={{ position: "relative", height: "100%" }}>
                 <ReactReader
