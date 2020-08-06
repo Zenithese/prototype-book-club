@@ -58,13 +58,14 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
 
         const pastHighlights = () => {
             if (highlights.length) {
+                console.log("highlights:", highlights)
                 highlights.forEach(highlight => {
                     const { cfiRange } = highlight;
                     rendition.annotations.highlight(
                         cfiRange,
                         {},
                         (e) => { console.log("highlight clicked", e.target) },
-                        "hl",
+                        `${cfiRange}`,
                         { "fill": color, "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
                     );
                 });
@@ -87,7 +88,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
                     cfiRange,
                     {},
                     (e) => { console.log("highlight clicked", e.target) },
-                    "hl",
+                    `${cfiRange}`,
                     { "fill": visible ? color : "transparent", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
                 );
             });
@@ -103,7 +104,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
                 cfiRange,
                 {},
                 (e) => { console.log("highlight clicked", e.target) },
-                "hl",
+                `${cfiRange}`,
                 { "fill": !visible ? color : "transparent", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
             );
             contents.window.getSelection().removeAllRanges();
@@ -123,7 +124,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
                     cfiRange,
                     {},
                     (e) => { console.log("highlight clicked", e.target) },
-                    "hl",
+                    `${cfiRange}`,
                     { "fill": !visible ? color : "transparent", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
                 );
             });

@@ -6,6 +6,7 @@ import { createRendition } from '../actions/rendition_actions'
 import { fetchBook, updateBook } from '../actions/books_actions'
 import { fetchSettings } from '../actions/settings_actions'
 import { darkTheme, lightTheme } from '../assests/reader_styles'
+import Popover from 'react-text-selection-popover';
 
 const storage = global.localStorage || null;
 
@@ -22,7 +23,6 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = ({ entities }) => {
     return {
-        // highlights: Object.values(entities.highlights),
         book: entities.books.book,
         theme: entities.settings.settings ? entities.settings.settings.theme : "light",
         userId: Object.keys(entities.users)[0],
@@ -34,15 +34,16 @@ class Reader extends Component {
         super(props);
         this.state = {
             fullscreen: false,
-            // location:
-            //     storage && storage.getItem("epub-location")
-            //         ? storage.getItem("epub-location")
-            //         : 2,
             location: this.props.book.location,
             localFile: null,
             localName: null,
+            visible: false,
+            x: 0,
+            y: 0,
+            cfiRange: null
         };
         this.rendition = null;
+        this.handleHighlight = this.handleHighlight.bind(this)
     }
 
     componentWillMount() {
@@ -50,50 +51,58 @@ class Reader extends Component {
         this.props.fetchSettings();
     }
 
+    handleHighlight() {
+        const { cfiRange } = this.state
+        const userId = Number(this.props.userId)
+        const bookId = this.props.book.id
+        const { createHighlight } = this.props
+        this.rendition.book.getRange(cfiRange).then(function (range) {
+            var text;
+            if (range) {
+                text = range.toString();
+                console.log(text)
+
+                let highlight = {
+                    text,
+                    cfiRange,
+                    userId,
+                    bookId
+                }
+
+                createHighlight(highlight)
+            }
+        })
+    }
+
     getRendition = rendition => {
         this.rendition = rendition
         this.props.createRendition(rendition)
-        rendition.on("selected", function (cfiRange, contents) {
-            rendition.annotations.remove(cfiRange, "highlight");
-            rendition.annotations.highlight(
-                cfiRange, 
-                {}, 
-                (e) => {console.log("highlight clicked", e.target)},
-                "hl", 
-                { "fill": "yellow", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
-            );
-            contents.window.getSelection().removeAllRanges();
-        });
-        
-        const handleHighlight = (highlight) => {
-            this.props.createHighlight(highlight);
+
+        const handleTooltip = (el, cfiRange) => {
+            console.log(`x: ${el.x.animVal.value}`, `y: ${el.y.animVal.value}`)
+            this.setState({ visible: true, x: el.x.animVal.value + 20, y: el.y.animVal.value + 30, cfiRange: cfiRange })  
         }
 
-        const userId = Number(this.props.userId);
-        const bookId = this.props.book.id;
-        
-        rendition.on("selected", function (cfiRange) {
+        rendition.on("selected", function (cfiRange, contents) {
+            console.log("selected")
+            global.cfiRange = cfiRange
+            global.contents = contents
+            global.rendition = rendition
+
+            rendition.annotations.remove(cfiRange, "highlight");
+            rendition.annotations.highlight(
+                cfiRange,
+                {},
+                (e) => { console.log("highlight clicked", e.target) },
+                `${cfiRange}`,
+                { "fill": "transparent" }
+            );
+
+            handleTooltip(document.getElementsByClassName(`${cfiRange}`)[0].firstChild, cfiRange)
+
             
-            rendition.book.getRange(cfiRange).then(function (range) {
-                var text;
-                if (range) {
-                    text = range.toString();
-                    
-                    let highlight = {
-                        text,
-                        cfiRange,
-                        userId,
-                        bookId
-                    }
-
-                    handleHighlight(highlight)
-                }
-
-            })
-
         });
-
-    };
+    }
 
     onLocationChanged = location => {
         this.setState(
@@ -104,14 +113,14 @@ class Reader extends Component {
                 storage && storage.setItem("epub-location", location);
             }
         );
-        // console.log(this.state.location)
         this.props.updateBook(this.props.book.id, this.state.location)
     };
 
     render() {
         const { location } = this.state;
         return (
-            <div style={{ position: "relative", height: "100%" }}>
+            <div style={{ position: "relative", height: "100%" }} >
+                
                 <ReactReader
                     url={this.props.book.epubFile}
                     title={this.props.book.title}
@@ -120,9 +129,72 @@ class Reader extends Component {
                     getRendition={this.getRendition}
                     styles={this.props.theme === "dark" ? darkTheme : lightTheme}
                 />
+
+                { this.state.visible ? <div className="tooltip" style={{ position: "absolute", left: `${this.state.x}px`, top: `${this.state.y}px`, backgroundColor: "red", zIndex: "1" }}><span className="popuptext" onClick={ () => this.handleHighlight() }>Highlight!</span></div> : null }
+
             </div>
         );
     }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Reader);
+
+// getRendition = rendition => {
+    //     this.rendition = rendition
+    //     this.props.createRendition(rendition)
+    //     // let _this = this
+    //     rendition.on("selected", function (cfiRange, contents) {
+    //             rendition.annotations.remove(cfiRange, "highlight");
+    //             rendition.annotations.highlight(
+    //                 cfiRange,
+    //                 {}, 
+    //                 (e) => {console.log("highlight clicked", e.target)},
+    //                 `${cfiRange}`, 
+    //                 { }
+    //             );
+    //             contents.window.getSelection().removeAllRanges();
+    //     });
+
+    //     this.handleHighlight = () => {
+    //         // this.rendition.on("selected", function (cfiRange, contents) {
+    //         //     rendition.annotations.remove(cfiRange, "highlight");
+    //         //     rendition.annotations.highlight(
+    //         //         cfiRange,
+    //         //         {},
+    //         //         (e) => { console.log("highlight clicked", e.target) },
+    //         //         `${cfiRange}`,
+    //         //         { "fill": "blue", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
+    //         //     );
+    //         //     contents.window.getSelection().removeAllRanges();
+    //         // });
+    //     }
+        
+    //     // const handleHighlight = (highlight) => {
+    //     //     this.props.createHighlight(highlight);
+    //     // }
+
+    //     const userId = Number(this.props.userId);
+    //     const bookId = this.props.book.id;
+        
+    //     rendition.on("selected", function (cfiRange) {
+            
+    //         rendition.book.getRange(cfiRange).then(function (range) {
+    //             var text;
+    //             if (range) {
+    //                 text = range.toString();
+                    
+    //                 let highlight = {
+    //                     text,
+    //                     cfiRange,
+    //                     userId,
+    //                     bookId
+    //                 }
+
+    //                 handleHighlight(highlight)
+    //             }
+
+    //         })
+
+    //     });
+
+    // };
