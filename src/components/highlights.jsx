@@ -36,6 +36,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
     const [settings, setSettings] = useState(false)
     const [fontSize, setFontSize] = useState(Number(_fontSize))
     const [theme, setTheme] = useState(_theme)
+    const [highlightsLength, setHighlightsLength] = useState(Infinity)
 
     useEffect(() => {
         fetchHighlights();
@@ -44,6 +45,13 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
     useEffect(() => {
         createSettings(id, color, fontSize, theme);
     }, [createSettings, id, color, fontSize, theme])
+
+    useEffect(() => {
+        if (rendition && highlights.length > highlightsLength) {
+            const { cfiRange } = highlights[highlights.length - 1];
+            updateHighlight(cfiRange)
+        }
+    }, [highlights])
 
     useEffect(() => {
         console.log("pastHighlights in useEffect")
@@ -69,17 +77,11 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
 
         const pastHighlights = () => {
             if (highlights.length) {
-                console.log("highlights:", highlights)
                 highlights.forEach(highlight => {
                     const { cfiRange } = highlight;
-                    rendition.annotations.highlight(
-                        cfiRange,
-                        {},
-                        (e) => { console.log("highlight clicked", e.target) },
-                        `${cfiRange}`,
-                        { "fill": color, "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
-                    );
+                    updateHighlight(cfiRange)
                 });
+                setHighlightsLength(highlights.length)
             }
         }
 
@@ -89,19 +91,23 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
         }
     }, [rendition, fetchRendition])
 
+    const updateHighlight = (cfiRange, toggle = false) => {
+        rendition.annotations.remove(cfiRange, "highlight");
+        rendition.annotations.highlight(
+            cfiRange,
+            {},
+            (e) => { console.log("highlight clicked", e.target) },
+            `${cfiRange}`,
+            { "fill": toggle ? visible ? color : "transparent" : color, "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
+        );
+    }
+
     const toggleHighlights = () => {
         if (highlights.length) {
             setVisible(!visible);
             highlights.forEach(highlight => {
                 const { cfiRange } = highlight;
-                rendition.annotations.remove(cfiRange, "highlight");
-                rendition.annotations.highlight(
-                    cfiRange,
-                    {},
-                    (e) => { console.log("highlight clicked", e.target) },
-                    `${cfiRange}`,
-                    { "fill": visible ? color : "transparent", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
-                );
+                updateHighlight(cfiRange, true)
             });
         };
     };
@@ -119,14 +125,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
         if (highlights.length) {
             highlights.forEach(highlight => {
                 const { cfiRange } = highlight;
-                rendition.annotations.remove(cfiRange, "highlight");
-                rendition.annotations.highlight(
-                    cfiRange,
-                    {},
-                    (e) => { console.log("highlight clicked", e.target) },
-                    `${cfiRange}`,
-                    { "fill": !visible ? color : "transparent", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
-                );
+                updateHighlight(cfiRange, true)
             });
         };
     };
@@ -155,7 +154,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
                     "{text}"
                     <br/>
                     <textarea></textarea>
-                    <a href={`#${cfiRange}`} onClick={() => { console.log(rendition.annotations); rendition.annotations.remove(cfiRange, "highlight"); deleteHighlight(id)}}>remove</a>
+                    <a href={`#${cfiRange}`} onClick={() => { console.log(rendition.annotations); rendition.annotations.remove(cfiRange, "highlight"); console.log(id); deleteHighlight(id)}}>remove</a>
                 </div>
             )
         })

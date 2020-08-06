@@ -52,9 +52,7 @@ class Reader extends Component {
 
     handleHighlight() {
         const { cfiRange } = this.state
-        const userId = Number(this.props.userId)
-        const bookId = this.props.book.id
-        const { createHighlight } = this.props
+        const { createHighlight, userId, book } = this.props
         this.rendition.book.getRange(cfiRange).then(function (range) {
             var text;
             if (range) {
@@ -64,8 +62,8 @@ class Reader extends Component {
                 let highlight = {
                     text,
                     cfiRange,
-                    userId,
-                    bookId
+                    userId: Number(userId),
+                    bookId: book.id
                 }
 
                 createHighlight(highlight)
