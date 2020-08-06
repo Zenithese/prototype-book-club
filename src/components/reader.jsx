@@ -6,7 +6,6 @@ import { createRendition } from '../actions/rendition_actions'
 import { fetchBook, updateBook } from '../actions/books_actions'
 import { fetchSettings } from '../actions/settings_actions'
 import { darkTheme, lightTheme } from '../assests/reader_styles'
-import Popover from 'react-text-selection-popover';
 
 const storage = global.localStorage || null;
 
@@ -79,15 +78,10 @@ class Reader extends Component {
         this.props.createRendition(rendition)
 
         const handleTooltip = (el, cfiRange) => {
-            console.log(`x: ${el.x.animVal.value}`, `y: ${el.y.animVal.value}`)
             this.setState({ visible: true, x: el.x.animVal.value + 20, y: el.y.animVal.value + 30, cfiRange: cfiRange })  
         }
 
         rendition.on("selected", function (cfiRange, contents) {
-            console.log("selected")
-            global.cfiRange = cfiRange
-            global.contents = contents
-            global.rendition = rendition
 
             rendition.annotations.remove(cfiRange, "highlight");
             rendition.annotations.highlight(
@@ -99,8 +93,7 @@ class Reader extends Component {
             );
 
             handleTooltip(document.getElementsByClassName(`${cfiRange}`)[0].firstChild, cfiRange)
-
-            
+ 
         });
     }
 
