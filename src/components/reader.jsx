@@ -41,6 +41,7 @@ class Reader extends Component {
             y: 0,
             cfiRange: null,
             displayingTooltip: false,
+            el: null
         };
         this.rendition = null;
         this.handleHighlight = this.handleHighlight.bind(this)
@@ -81,22 +82,42 @@ class Reader extends Component {
         this.props.createRendition(rendition)
         const _this = this
 
-        rendition.on("selected", function (cfiRange) {
+        rendition.on("selected", function (cfiRange, contents) {
+
+            let className = `${cfiRange}-${Math.random()}`
+
+            rendition.annotations.remove(cfiRange, "highlight");
+            
+            rendition.annotations.highlight(cfiRange, {}, null, className, { "fill": "transparent" });
+
+            _this.state.el = document.getElementsByClassName(className)[0]
            
             _this.setState({ cfiRange: cfiRange, displayingTooltip: true })
 
         });
 
         
-        rendition.on("mousedown", function () {
+        rendition.on("mousedown", function (event) {
 
-            _this.setState({visible: false})
+            _this.setState({ visible: false, x: event.clientX, y: event.clientY })
             
         })
 
         rendition.on("mouseup", function (event) {
 
-            if (_this.state.displayingTooltip) _this.setState({visible: true, x: event.clientX, y: event.clientY})
+            if (_this.state.displayingTooltip) {
+                
+                if (event.clientX < _this.state.x) {
+
+                    _this.setState({ visible: true, x: event.clientX + 20, y: _this.state.el.firstElementChild.y.animVal.value + 30})
+
+                } else {
+
+                    _this.setState({ visible: true, x: event.clientX + 20, y: _this.state.el.lastElementChild.y.animVal.value + 65 })
+                    
+                }
+
+            }
 
             _this.setState({ displayingTooltip: false })
 
