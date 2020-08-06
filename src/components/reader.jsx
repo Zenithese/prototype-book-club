@@ -39,7 +39,8 @@ class Reader extends Component {
             visible: false,
             x: 0,
             y: 0,
-            cfiRange: null
+            cfiRange: null,
+            displayingTooltip: false,
         };
         this.rendition = null;
         this.handleHighlight = this.handleHighlight.bind(this)
@@ -53,6 +54,7 @@ class Reader extends Component {
     handleHighlight() {
         const { cfiRange } = this.state
         const { createHighlight, userId, book } = this.props
+        const _this = this
         this.rendition.book.getRange(cfiRange).then(function (range) {
             var text;
             if (range) {
@@ -67,32 +69,39 @@ class Reader extends Component {
                 }
 
                 createHighlight(highlight)
+
+                _this.setState({visible: false})
             }
         })
     }
 
     getRendition = rendition => {
+
         this.rendition = rendition
         this.props.createRendition(rendition)
+        const _this = this
 
-        const handleTooltip = (el, cfiRange) => {
-            this.setState({ visible: true, x: el.x.animVal.value + 20, y: el.y.animVal.value + 30, cfiRange: cfiRange })  
-        }
+        rendition.on("selected", function (cfiRange) {
+           
+            _this.setState({ cfiRange: cfiRange, displayingTooltip: true })
 
-        rendition.on("selected", function (cfiRange, contents) {
-
-            rendition.annotations.remove(cfiRange, "highlight");
-            rendition.annotations.highlight(
-                cfiRange,
-                {},
-                (e) => { console.log("highlight clicked", e.target) },
-                `${cfiRange}`,
-                { "fill": "transparent" }
-            );
-
-            handleTooltip(document.getElementsByClassName(`${cfiRange}`)[0].firstChild, cfiRange)
- 
         });
+
+        
+        rendition.on("mousedown", function () {
+
+            _this.setState({visible: false})
+            
+        })
+
+        rendition.on("mouseup", function (event) {
+
+            if (_this.state.displayingTooltip) _this.setState({visible: true, x: event.clientX, y: event.clientY})
+
+            _this.setState({ displayingTooltip: false })
+
+        })
+
     }
 
     onLocationChanged = location => {
