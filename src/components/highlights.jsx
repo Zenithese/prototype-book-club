@@ -46,14 +46,25 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
     }, [createSettings, id, color, fontSize, theme])
 
     useEffect(() => {
+        console.log("pastHighlights in useEffect")
         fetchRendition()
 
-        if (theme === "dark" && rendition) {
-            rendition.themes.default({
-                'body': {
-                    'color': "#999",
-                },
-            });
+        if (rendition) {
+
+            // rendition.themes.default({
+            //     '::selection': {
+            //         'background': color,
+            //     },
+            // }); // selection color, needs opacity 
+
+            if (theme === "dark") {
+                rendition.themes.default({
+                    'body': {
+                        'color': "#999",
+                    },
+                });
+            }
+
         };
 
         const pastHighlights = () => {
@@ -98,23 +109,12 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
     const setHighlightsColor = (color, rgba) => {
         setColor(color)
         setRgba(rgba)
-        rendition.on("selected", function (cfiRange, contents) {
-            rendition.annotations.remove(cfiRange, "highlight");
-            rendition.annotations.highlight(
-                cfiRange,
-                {},
-                (e) => { console.log("highlight clicked", e.target) },
-                `${cfiRange}`,
-                { "fill": !visible ? color : "transparent", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
-            );
-            contents.window.getSelection().removeAllRanges();
-        });
 
-        rendition.themes.default({
-            '::selection': {
-                'background': rgba,
-            },
-        });
+        // rendition.themes.default({
+        //     '::selection': {
+        //         'background': rgba,
+        //     },
+        // }); // selection color
 
         if (highlights.length) {
             highlights.forEach(highlight => {
