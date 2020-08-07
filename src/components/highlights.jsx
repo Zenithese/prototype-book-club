@@ -32,7 +32,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
     const [rgba, setRgba] = useState("rgba(255,255,0, 0.3)")
     const [color, setColor] = useState(highlightColor)
     const [toggle, setToggle] = useState(false)
-    const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useState(true)
     const [settings, setSettings] = useState(false)
     const [fontSize, setFontSize] = useState(Number(_fontSize))
     const [theme, setTheme] = useState(_theme)
@@ -44,6 +44,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
 
     useEffect(() => {
         createSettings(id, color, fontSize, theme);
+        
     }, [createSettings, id, color, fontSize, theme])
 
     useEffect(() => {
@@ -54,7 +55,6 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
     }, [highlights])
 
     useEffect(() => {
-        console.log("pastHighlights in useEffect")
         fetchRendition()
 
         if (rendition) {
@@ -72,33 +72,26 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
                     },
                 });
             }
+        
+            rendition.themes.fontSize(String(_fontSize) + "%");
+            
+            setTimeout(() => {
+                toggleHighlights()
+                setHighlightsLength(highlights.length)
+            }, 1000)
 
         };
 
-        const pastHighlights = () => {
-            if (highlights.length) {
-                highlights.forEach(highlight => {
-                    const { cfiRange } = highlight;
-                    updateHighlight(cfiRange)
-                });
-                setHighlightsLength(highlights.length)
-            }
-        }
-
-        if (rendition) {
-            rendition.themes.fontSize(String(fontSize) + "%");
-            pastHighlights();
-        }
     }, [rendition, fetchRendition])
 
-    const updateHighlight = (cfiRange, toggle = false) => {
+    const updateHighlight = (cfiRange, updateHighlightToggle = false) => {
         rendition.annotations.remove(cfiRange, "highlight");
         rendition.annotations.highlight(
             cfiRange,
             {},
-            (e) => { console.log("highlight clicked", e.target) },
+            null,
             `${cfiRange}`,
-            { "fill": toggle ? visible ? color : "transparent" : color, "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
+            { "fill": updateHighlightToggle ? visible ? color : "transparent" : color, "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
         );
     }
 
@@ -125,7 +118,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
         if (highlights.length) {
             highlights.forEach(highlight => {
                 const { cfiRange } = highlight;
-                updateHighlight(cfiRange, true)
+                updateHighlight(cfiRange)
             });
         };
     };
