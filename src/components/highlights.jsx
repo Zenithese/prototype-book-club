@@ -59,11 +59,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
 
         if (rendition) {
 
-            // rendition.themes.default({
-            //     '::selection': {
-            //         'background': color,
-            //     },
-            // }); // selection color, needs opacity 
+            // selection color, needs opacity 
 
             if (theme === "dark") {
                 rendition.themes.default({
@@ -74,7 +70,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
             }
         
             rendition.themes.fontSize(String(_fontSize) + "%");
-            
+
             setTimeout(() => {
                 toggleHighlights()
                 setHighlightsLength(highlights.length)
@@ -109,11 +105,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
         setColor(color)
         setRgba(rgba)
 
-        // rendition.themes.default({
-        //     '::selection': {
-        //         'background': rgba,
-        //     },
-        // }); // selection color
+        // selection color
 
         if (highlights.length) {
             highlights.forEach(highlight => {
@@ -190,3 +182,9 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Highlights);
+
+// rendition.themes.default({
+//     '::selection': {
+//         'background': rgba,
+//     },
+// }); // selection color
