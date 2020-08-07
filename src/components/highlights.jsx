@@ -110,7 +110,10 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
         if (highlights.length) {
             highlights.forEach(highlight => {
                 const { cfiRange } = highlight;
-                updateHighlight(cfiRange)
+                rendition.annotations.remove(cfiRange, "highlight");
+                rendition.annotations.highlight(cfiRange, {}, null, `${cfiRange}`,
+                    { "fill": !visible ? color : "transparent", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
+                );
             });
         };
     };
