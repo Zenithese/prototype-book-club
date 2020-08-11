@@ -87,6 +87,18 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
         );
     }
 
+    const updateHighlights = (updateHighlightToggle = false) => {
+         if (highlights.length) {
+            highlights.forEach(highlight => {
+                const { cfiRange } = highlight;
+                rendition.annotations.remove(cfiRange, "highlight");
+                rendition.annotations.highlight(cfiRange, {}, null, `${cfiRange}`,
+                    { "fill": updateHighlightToggle ? visible ? color : "transparent" : color, "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
+                );
+            });
+        };
+    }
+
     const toggleHighlights = () => {
         if (highlights.length) {
             setVisible(!visible);
@@ -117,7 +129,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
     const setTextSize = (e) => {
         setFontSize(e.target.value)
         rendition.themes.fontSize(String(fontSize) + "%");
-        if (!visible) setHighlightsColor(color, rgba)
+        setHighlightsColor(color, rgba)
     }
 
     const setThemeColor = (theme, textColor) => {
@@ -133,7 +145,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
         highlights.map(({ id, text, cfiRange }, i) => {
             return (
                 <div className="annotation" key={i}>
-                    <a href={`#${cfiRange}`} onClick={() => rendition.display(cfiRange)}>Go to:</a>
+                    <a href={`#${cfiRange}`} onClick={() => { rendition.display(cfiRange) } }>Go to:</a>
                     <br/>
                     "{text}"
                     <br/>
