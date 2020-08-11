@@ -87,18 +87,6 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
         );
     }
 
-    const updateHighlights = (updateHighlightToggle = false) => {
-         if (highlights.length) {
-            highlights.forEach(highlight => {
-                const { cfiRange } = highlight;
-                rendition.annotations.remove(cfiRange, "highlight");
-                rendition.annotations.highlight(cfiRange, {}, null, `${cfiRange}`,
-                    { "fill": updateHighlightToggle ? visible ? color : "transparent" : color, "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
-                );
-            });
-        };
-    }
-
     const toggleHighlights = () => {
         if (highlights.length) {
             setVisible(!visible);
