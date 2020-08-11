@@ -14,7 +14,8 @@ const mapStateToProps = ({ entities, session }) => {
         _fontSize: entities.users[session.id].fontSize,
         highlightColor: entities.users[session.id].highlightColor,
         _theme: entities.users[session.id].theme,
-        id: session.id
+        id: session.id,
+        book: entities.books.book
     }
 }
 
@@ -28,7 +29,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHighlights, deleteHighlight, rendition, fetchRendition, createSettings }) {
+function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHighlights, deleteHighlight, rendition, fetchRendition, createSettings, book }) {
     const [rgba, setRgba] = useState("rgba(255,255,0, 0.3)")
     const [color, setColor] = useState(highlightColor)
     const [toggle, setToggle] = useState(false)
@@ -43,6 +44,15 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
     }, [fetchHighlights])
 
     useEffect(() => {
+        updateHighlights()
+    }, [book])
+
+    useEffect(() => {
+        console.log("recycle")
+    }, [visible])
+
+    useEffect(() => {
+        console.log("creating settings")
         createSettings(id, color, fontSize, theme);
         
     }, [createSettings, id, color, fontSize, theme])
@@ -53,6 +63,11 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
             updateHighlight(cfiRange)
         }
     }, [highlights])
+
+    useEffect(() => {
+        if (rendition) rendition.themes.fontSize(String(fontSize) + "%")
+        setHighlightsColor(color, rgba)
+    }, [fontSize])
 
     useEffect(() => {
         fetchRendition()
@@ -87,6 +102,18 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
         );
     }
 
+    const updateHighlights = (updateHighlightToggle = false) => {
+        if (highlights.length) {
+            highlights.forEach(highlight => {
+                const { cfiRange } = highlight;
+                rendition.annotations.remove(cfiRange, "highlight");
+                rendition.annotations.highlight(cfiRange, {}, null, `${cfiRange}`,
+                    { "fill": updateHighlightToggle ? visible ? color : "transparent" : color, "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
+                );
+            });
+        };
+    }
+
     const toggleHighlights = () => {
         if (highlights.length) {
             setVisible(!visible);
@@ -116,8 +143,6 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
 
     const setTextSize = (e) => {
         setFontSize(e.target.value)
-        rendition.themes.fontSize(String(fontSize) + "%");
-        setHighlightsColor(color, rgba)
     }
 
     const setThemeColor = (theme, textColor) => {
