@@ -48,9 +48,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
     }, [book])
 
     useEffect(() => {
-        console.log("creating settings")
         createSettings(id, color, fontSize, theme);
-        
     }, [createSettings, id, color, fontSize, theme])
 
     useEffect(() => {
