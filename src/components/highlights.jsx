@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchHighlights, deleteHighlight } from '../actions/highlights_actions'
+import { fetchComments } from '../actions/comments_actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faEye } from '@fortawesome/free-solid-svg-icons'
 import { fetchRendition } from '../actions/rendition_actions'
@@ -10,6 +11,7 @@ import { createSettings } from '../actions/settings_actions'
 const mapStateToProps = ({ entities, session }) => {
     return {
         highlights: entities.highlights.filter(highlight => highlight.userId === session.id && highlight.bookId === entities.books.book.id),
+        comments: entities.comments,
         rendition: entities.rendition.rendition,
         _fontSize: entities.users[session.id].fontSize,
         highlightColor: entities.users[session.id].highlightColor,
@@ -22,6 +24,7 @@ const mapStateToProps = ({ entities, session }) => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchHighlights: () => dispatch(fetchHighlights()),
+        fetchComments: () => dispatch(fetchComments()),
         deleteHighlight: (id) => dispatch(deleteHighlight(id)),
         fetchRendition: () => dispatch(fetchRendition()),
         createSettings: (id, color, fontSize, theme) => dispatch(createSettings(id, color, fontSize, theme))
@@ -29,7 +32,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHighlights, deleteHighlight, rendition, fetchRendition, createSettings, book }) {
+function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHighlights, fetchComments, deleteHighlight, rendition, fetchRendition, createSettings, book }) {
     const [rgba, setRgba] = useState("rgba(255,255,0, 0.3)")
     const [color, setColor] = useState(highlightColor)
     const [toggle, setToggle] = useState(false)
@@ -41,7 +44,8 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
 
     useEffect(() => {
         fetchHighlights();
-    }, [fetchHighlights])
+        fetchComments();
+    }, [fetchHighlights, fetchComments])
 
     useEffect(() => {
         updateHighlights()
