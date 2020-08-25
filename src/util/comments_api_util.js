@@ -13,10 +13,11 @@ export const fetchComments = () => {
 };
 
 export const createComment = (data) => {
-    return axios.post('http://localhost:3001/api/comments',
+    return axios.post(`http://localhost:3001/api/comments/${data.id}/comments`,
         {
             comment: {
-                body: data.text,
+                body: data.body,
+                user_id: data.userId,
             },
         },
         {
