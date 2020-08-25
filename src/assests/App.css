@@ -19,6 +19,16 @@
   height: 5%;
 }
 
+.comments {
+  display: flex;
+  text-align: left;
+  flex-direction: column;
+}
+
+.comment {
+  margin-left: 3%;
+}
+
 .toggle-button {
   height: 5vh;
   width: 5vh;

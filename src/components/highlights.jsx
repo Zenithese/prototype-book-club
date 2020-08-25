@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Comment from './comments'
 import { connect } from 'react-redux';
 import { fetchHighlights, deleteHighlight } from '../actions/highlights_actions'
 import { fetchComments } from '../actions/comments_actions'
@@ -153,14 +154,22 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
     }
 
     const highlightList = highlights.length ? (
-        highlights.map(({ id, text, cfiRange }, i) => {
+        highlights.map(({ id, text, cfiRange, comments }, i) => {
             return (
                 <div className="annotation" key={i}>
                     <a href={`#${cfiRange}`} onClick={() => { rendition.display(cfiRange) } }>Go to:</a>
                     <br/>
-                    "{text}"
-                    <br/>
-                    <textarea></textarea>
+                    <div className="quote">
+                        <span className="text" style={{background: `${color}`}}>{text}</span>
+                    </div>
+                    <hr/>
+                    <div className="comments">
+                        {comments.map(comment => {
+                            return (
+                                <Comment key={comment.id} comment={comment} />
+                            )
+                        })}
+                    </div>
                     <a href={`#${cfiRange}`} onClick={() => { console.log(rendition.annotations); rendition.annotations.remove(cfiRange, "highlight"); console.log(id); deleteHighlight(id)}}>remove</a>
                 </div>
             )
