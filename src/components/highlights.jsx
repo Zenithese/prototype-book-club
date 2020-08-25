@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faEye } from '@fortawesome/free-solid-svg-icons'
 import { fetchRendition } from '../actions/rendition_actions'
 import { createSettings } from '../actions/settings_actions'
+import { createComment } from '../actions/comments_actions'
+import comments from './comments';
 
 
 const mapStateToProps = ({ entities, session }) => {
@@ -18,7 +20,8 @@ const mapStateToProps = ({ entities, session }) => {
         highlightColor: entities.users[session.id].highlightColor,
         _theme: entities.users[session.id].theme,
         id: session.id,
-        book: entities.books.book
+        book: entities.books.book,
+        userId: Number(session.id),
     }
 }
 
@@ -28,25 +31,35 @@ const mapDispatchToProps = dispatch => {
         fetchComments: () => dispatch(fetchComments()),
         deleteHighlight: (id) => dispatch(deleteHighlight(id)),
         fetchRendition: () => dispatch(fetchRendition()),
-        createSettings: (id, color, fontSize, theme) => dispatch(createSettings(id, color, fontSize, theme))
+        createSettings: (id, color, fontSize, theme) => dispatch(createSettings(id, color, fontSize, theme)),
+        createComment: (comment) => dispatch(createComment(comment)),
     }
 }
 
 
-function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHighlights, fetchComments, deleteHighlight, rendition, fetchRendition, createSettings, book }) {
+function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHighlights, fetchComments, deleteHighlight, rendition, fetchRendition, createSettings, book, createComment, userId, comments }) {
     const [rgba, setRgba] = useState("rgba(255,255,0, 0.3)")
     const [color, setColor] = useState(highlightColor)
     const [toggle, setToggle] = useState(false)
     const [visible, setVisible] = useState(true)
+    const [visibleForm, setVisibleForm] = useState(false)
+    const [body, setBody] = useState("")
     const [settings, setSettings] = useState(false)
     const [fontSize, setFontSize] = useState(Number(_fontSize))
     const [theme, setTheme] = useState(_theme)
     const [highlightsLength, setHighlightsLength] = useState(Infinity)
+    
 
     useEffect(() => {
         fetchHighlights();
         fetchComments();
     }, [fetchHighlights, fetchComments])
+
+    useEffect(() => {
+        if (comments) {
+            fetchHighlights();
+        }
+    }, [comments, fetchHighlights])
 
     useEffect(() => {
         updateHighlights()
@@ -153,23 +166,59 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
         });
     }
 
+    const handleSubmit = (e, id) => {
+        e.preventDefault();
+        const comment = {
+            body,
+            id,
+            userId,
+            parent: true,
+        }
+        createComment(comment);
+    }
+
+    const commentThread = (thread, id) => { 
+        return (
+            comments.length && thread.length ? (
+                <div>
+                    <button onClick={() => setVisibleForm(!visibleForm)}>Thoughts</button>
+                    <form style={visibleForm ? { display: "block" } : { display: "none" }} onSubmit={(e) => handleSubmit(e, id)} >
+                        <label>Reply:</label>
+                        <input type="body" value={body} onChange={(e) => setBody(e.target.value)} />
+                    </form>
+                    <div className="comments">
+                        {thread.map(comment => {
+                            return (
+                                <Comment key={comment.id} comment={comment} />
+                            )
+                        })}
+                    </div>
+                </div>
+            ) : (
+                <div>
+                    {/* <button onClick={() => setVisibleForm(!visibleForm)}>Thoughts</button>
+                    <form style={visibleForm ? { display: "block" } : { display: "none" }} onSubmit={(e) => handleSubmit(e, id)} >
+                        <label>Reply:</label>
+                        <input type="body" value={body} onChange={(e) => setBody(e.target.value)} />
+                    </form> */}
+                    <p>no comments</p >
+                </div>
+            )
+        )
+    }
+
     const highlightList = highlights.length ? (
         highlights.map(({ id, text, cfiRange, comments }, i) => {
             return (
                 <div className="annotation" key={i}>
+                    {console.log("new highlight")}
                     <a href={`#${cfiRange}`} onClick={() => { rendition.display(cfiRange) } }>Go to:</a>
                     <br/>
                     <div className="quote">
                         <span className="text" style={{background: `${color}`}}>{text}</span>
                     </div>
                     <hr/>
-                    <div className="comments">
-                        {comments.map(comment => {
-                            return (
-                                <Comment key={comment.id} comment={comment} />
-                            )
-                        })}
-                    </div>
+                    {commentThread(comments, id)}
                     <a href={`#${cfiRange}`} onClick={() => { console.log(rendition.annotations); rendition.annotations.remove(cfiRange, "highlight"); console.log(id); deleteHighlight(id)}}>remove</a>
                 </div>
             )

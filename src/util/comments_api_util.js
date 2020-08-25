@@ -13,7 +13,7 @@ export const fetchComments = () => {
 };
 
 export const createComment = (data) => {
-    return axios.post(`http://localhost:3001/api/comments/${data.id}/comments`,
+    return axios.post(data.parent ? `http://localhost:3001/api/highlights/${data.id}/comments` : `http://localhost:3001/api/comments/${data.id}/comments`,
         {
             comment: {
                 body: data.body,
