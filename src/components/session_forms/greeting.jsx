@@ -19,7 +19,6 @@ const Greeting = ({ currentUser, getCurrentUser, openModal }) => {
 
     );
 
-    console.log(currentUser)
     return currentUser ? null : sessionLinks();
 };
 

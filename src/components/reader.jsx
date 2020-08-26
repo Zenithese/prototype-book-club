@@ -60,7 +60,6 @@ class Reader extends Component {
             var text;
             if (range) {
                 text = range.toString();
-                console.log(text)
 
                 let highlight = {
                     text,
@@ -159,63 +158,3 @@ class Reader extends Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Reader);
-
-// getRendition = rendition => {
-    //     this.rendition = rendition
-    //     this.props.createRendition(rendition)
-    //     // let _this = this
-    //     rendition.on("selected", function (cfiRange, contents) {
-    //             rendition.annotations.remove(cfiRange, "highlight");
-    //             rendition.annotations.highlight(
-    //                 cfiRange,
-    //                 {}, 
-    //                 (e) => {console.log("highlight clicked", e.target)},
-    //                 `${cfiRange}`, 
-    //                 { }
-    //             );
-    //             contents.window.getSelection().removeAllRanges();
-    //     });
-
-    //     this.handleHighlight = () => {
-    //         // this.rendition.on("selected", function (cfiRange, contents) {
-    //         //     rendition.annotations.remove(cfiRange, "highlight");
-    //         //     rendition.annotations.highlight(
-    //         //         cfiRange,
-    //         //         {},
-    //         //         (e) => { console.log("highlight clicked", e.target) },
-    //         //         `${cfiRange}`,
-    //         //         { "fill": "blue", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }
-    //         //     );
-    //         //     contents.window.getSelection().removeAllRanges();
-    //         // });
-    //     }
-        
-    //     // const handleHighlight = (highlight) => {
-    //     //     this.props.createHighlight(highlight);
-    //     // }
-
-    //     const userId = Number(this.props.userId);
-    //     const bookId = this.props.book.id;
-        
-    //     rendition.on("selected", function (cfiRange) {
-            
-    //         rendition.book.getRange(cfiRange).then(function (range) {
-    //             var text;
-    //             if (range) {
-    //                 text = range.toString();
-                    
-    //                 let highlight = {
-    //                     text,
-    //                     cfiRange,
-    //                     userId,
-    //                     bookId
-    //                 }
-
-    //                 handleHighlight(highlight)
-    //             }
-
-    //         })
-
-    //     });
-
-    // };

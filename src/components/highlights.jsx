@@ -223,7 +223,6 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
         highlights.map(({ id, text, cfiRange, comments }, i) => {
             return (
                 <div className="annotation" key={i}>
-                    {console.log("new highlight")}
                     <a href={`#${cfiRange}`} onClick={() => { rendition.display(cfiRange) } }>Go to:</a>
                     <br/>
                     <div className="quote">
