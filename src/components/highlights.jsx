@@ -8,7 +8,6 @@ import { faCog, faEye } from '@fortawesome/free-solid-svg-icons'
 import { fetchRendition } from '../actions/rendition_actions'
 import { createSettings } from '../actions/settings_actions'
 import { createComment } from '../actions/comments_actions'
-import comments from './comments';
 
 
 const mapStateToProps = ({ entities, session }) => {
@@ -42,7 +41,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
     const [color, setColor] = useState(highlightColor)
     const [toggle, setToggle] = useState(false)
     const [visible, setVisible] = useState(true)
-    const [visibleForm, setVisibleForm] = useState(false)
+    const [visibleForms, setVisibleForms] = useState(new Set())
     const [body, setBody] = useState("")
     const [settings, setSettings] = useState(false)
     const [fontSize, setFontSize] = useState(Number(_fontSize))
@@ -177,12 +176,25 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
         createComment(comment);
     }
 
-    const commentThread = (thread, id) => { 
+    const handleVisibleForm = (e, id) => {
+        e.preventDefault();
+        const newSet = new Set(visibleForms);
+        if (visibleForms.has(id)) {
+            newSet.delete(id);
+            setVisibleForms(newSet);
+        } else {
+            newSet.add(id);
+            setVisibleForms(newSet);
+        }
+    }
+
+    const commentThread = (thread, id) => {
+        debugger
         return (
             comments.length && thread.length ? (
                 <div>
-                    <button onClick={() => setVisibleForm(!visibleForm)}>Thoughts</button>
-                    <form style={visibleForm ? { display: "block" } : { display: "none" }} onSubmit={(e) => handleSubmit(e, id)} >
+                    <button onClick={(e) => handleVisibleForm(e, id)}>Thoughts</button>
+                    <form style={visibleForms.has(id) ? { display: "block" } : { display: "none" }} onSubmit={(e) => handleSubmit(e, id)} >
                         <label>Reply:</label>
                         <input type="body" value={body} onChange={(e) => setBody(e.target.value)} />
                     </form>
@@ -196,11 +208,11 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
                 </div>
             ) : (
                 <div>
-                    {/* <button onClick={() => setVisibleForm(!visibleForm)}>Thoughts</button>
-                    <form style={visibleForm ? { display: "block" } : { display: "none" }} onSubmit={(e) => handleSubmit(e, id)} >
+                    <button onClick={(e) => handleVisibleForm(e, id)}>Thoughts</button>
+                    <form style={visibleForms.has(id) ? { display: "block" } : { display: "none" }} onSubmit={(e) => handleSubmit(e, id)} >
                         <label>Reply:</label>
                         <input type="body" value={body} onChange={(e) => setBody(e.target.value)} />
-                    </form> */}
+                    </form>
                     <p>no comments</p >
                 </div>
             )
