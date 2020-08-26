@@ -189,16 +189,15 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
     }
 
     const commentThread = (thread, id) => {
-        debugger
         return (
             comments.length && thread.length ? (
-                <div>
-                    <button onClick={(e) => handleVisibleForm(e, id)}>Thoughts</button>
-                    <form style={visibleForms.has(id) ? { display: "block" } : { display: "none" }} onSubmit={(e) => handleSubmit(e, id)} >
-                        <label>Reply:</label>
-                        <input type="body" value={body} onChange={(e) => setBody(e.target.value)} />
-                    </form>
-                    <div className="comments">
+                <div className="comments">
+                    <div className="comment">
+                        <button onClick={(e) => handleVisibleForm(e, id)}>Thoughts</button>
+                        <form style={visibleForms.has(id) ? { display: "block" } : { display: "none" }} onSubmit={(e) => handleSubmit(e, id)} >
+                            <label>thought:</label>
+                            <input type="body" value={body} onChange={(e) => setBody(e.target.value)} />
+                        </form>
                         {thread.map(comment => {
                             return (
                                 <Comment key={comment.id} comment={comment} />
@@ -207,13 +206,14 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
                     </div>
                 </div>
             ) : (
-                <div>
-                    <button onClick={(e) => handleVisibleForm(e, id)}>Thoughts</button>
-                    <form style={visibleForms.has(id) ? { display: "block" } : { display: "none" }} onSubmit={(e) => handleSubmit(e, id)} >
-                        <label>Reply:</label>
-                        <input type="body" value={body} onChange={(e) => setBody(e.target.value)} />
-                    </form>
-                    <p>no comments</p >
+                <div className="comments">
+                    <div className="comment">
+                        <button onClick={(e) => handleVisibleForm(e, id)}>Thoughts</button>
+                        <form style={visibleForms.has(id) ? { display: "block" } : { display: "none" }} onSubmit={(e) => handleSubmit(e, id)} >
+                            <label>thought:</label>
+                            <input type="body" value={body} onChange={(e) => setBody(e.target.value)} />
+                        </form>
+                    </div>
                 </div>
             )
         )

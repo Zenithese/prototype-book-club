@@ -41,7 +41,6 @@ function Comment({ comment, createComment, fetchComments, userId, comments }) {
 
     return (
         <div className="comments">
-            {console.log("comments")}
             <div className="comment" key={comment.id}>
                 <div>{comment.body}</div>
                 <button onClick={() => setVisible(!visible)}>reply</button>
