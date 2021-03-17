@@ -1,5 +1,5 @@
 import React from 'react';
-import Greeting from './components/session_forms/greeting_container'
+import Greeting from './components/book_session_forms/greeting_container'
 import Modal from './components/session_forms/modal'
 import Reader from './components/reader'
 import Highlights from './components/highlights'

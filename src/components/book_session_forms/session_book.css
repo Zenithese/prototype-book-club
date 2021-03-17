@@ -1,0 +1,202 @@
+.session-cover {
+  position: absolute;
+  display: ruby;
+  top: 50%;
+  left: 50%;
+  transition: transform 0.6s;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 240px;
+  height: 360px;
+  text-align: center;
+  perspective: 1000px;
+}
+
+.session-cover-open {
+    transform: translate(0%, -50%);
+}
+
+.cover {
+  position: absolute;
+  transition: transform 0.6s;
+  transform-origin: center left;
+  transform-style: preserve-3d;
+  width: 240px;
+  height: 360px;
+  text-align: center;
+  transform: rotateY(-30deg)
+}
+
+.hover {
+  transform: rotateY(-40deg)
+}
+
+.open-cover {
+  transform: rotateY(-150deg);
+}
+
+.open-hover {
+  transform: rotateY(-150deg);
+}
+
+.page {
+  position: absolute;
+  transition: transform 0.6s;
+  transform-origin: center left;
+  width: 240px;
+  height: 360px;
+  text-align: center;
+  transform-style: preserve-3d;
+  transform: rotateY(-30deg);
+  background-color: aliceblue;
+}
+
+.flipped-page {
+  transform: rotateY(-140deg);
+}
+
+.back-cover {
+  position: absolute;
+  transition: transform 0.6s;
+  transform-origin: center left;
+  width: 240px;
+  height: 360px;
+  text-align: center;
+  background-color:transparent;
+  transform-style: preserve-3d;
+  transform: rotateY(-25deg);
+}
+
+.flipped-back-cover {
+  transform: rotateY(-140deg);
+}
+
+.closed-hover {
+  transform: rotateY(-130deg)
+}
+
+.back-of-book {
+  transform: translate(50%, -50%);
+}
+
+.front, .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+
+.front {
+  color: black;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.back {
+  transform: rotateY(-180deg);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.page-front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: black;
+  z-index: 1;
+  transition: z-index 0.3s;
+}
+
+.index {
+  z-index: 0;
+}
+
+.page-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: rotateY(-180deg);
+}
+
+.back-cover-color {
+  /* background-color: #2980b9; */
+  background-color: orange;
+}
+
+.page-color {
+  background-color: aliceblue;
+}
+
+.cover-color {
+  background-color: orange;
+}
+
+.book-box-shadow {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  /* box-shadow: rgb(255 255 255) 0px -1px 4px, #ffc107 0px -2px 7px, 30px 5px 24px 5px rgb(0 0 0 / 0%); */
+}
+
+.sticky-button {
+  height: 20px;
+  /* position: relative; */
+  background: red;
+  border: none;
+}
+
+.right-arrow {
+  width: 0;
+  height: 0;
+  border-top: 10px solid red;
+  border-left: 10px solid red;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid red;
+}
+
+.left-arrow {
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-right: 10px solid red;
+  border-bottom: 10px solid transparent;
+}
+
+.page-sticky-container {
+  position: relative;
+  width: 60px;
+}
+
+.sticky-button-container {
+  display: flex;
+  width: max-content;
+}
+
+.left-sticky-margin {
+  margin-left: 217px;
+  transform: rotate(349deg);
+}
+
+.right-sticky-margin {
+  margin-left: -37px;
+  transform: rotate(349deg);
+}
+
+/* .outside-right-sticky {
+  transform: rotateY(-180deg) rotate(349deg);
+  left: 162px;
+  top: 100px;
+  position: absolute;
+}
+
+.form {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+} */
+
+/* transform: rotateY(
+-180deg
+) rotate(
+349deg
+) translateZ(0px);
+    left: 257px;
+    top: 100px;
+    position: absolute; */
