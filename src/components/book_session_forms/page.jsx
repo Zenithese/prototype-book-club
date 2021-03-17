@@ -32,10 +32,6 @@ export default function Page({ position, setPosition, pageNum, defaultZ, setDefa
             <div className="front-back-container">
                 <div className="front page-color">
                     <AuthRoute exact path="/" component={SignupFormContainer}/>
-                    {/* <div className="sticky-button-container left-sticky-margin" onClick={handleClick}>
-                        <div className="sticky-button">Login instead?</div>
-                        <div className="right-arrow"></div>
-                    </div> */}
                     <div className="sticky-button-container left-sticky-margin" onClick={handleClick}>
                         <div className="left-arrow"></div>
                         <div className="page-sticky-container">
@@ -47,15 +43,7 @@ export default function Page({ position, setPosition, pageNum, defaultZ, setDefa
                 </div>
                 <div className="back page-color">
                     <AuthRoute exact path="/" component={LoginFormContainer} />
-                    {/* <div className="sticky-button-container right-sticky-margin" onClick={handleClick}>
-                        <div className="left-arrow"></div>
-                        <div className="sticky-button">Signin instead?</div>
-                    </div> */}
                 </div>
-                {/* <div className="sticky-button-container outside-right-sticky" onClick={handleClick}>
-                    <div className="left-arrow"></div>
-                    <div className="sticky-button">Signin instead?</div>
-                </div> */}
             </div>
         </div>
     )
