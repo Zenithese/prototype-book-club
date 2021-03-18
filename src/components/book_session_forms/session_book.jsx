@@ -1,5 +1,5 @@
 import './session_book.css'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Cover from './cover';
 import Page from './page';
 import BackCover from './back_cover';
@@ -10,6 +10,8 @@ export default function SessionBook() {
     const [position, setPosition] = useState(0)
     const [bookClosed, setBookClosed] = useState(false)
     const [defaultZ, setDefaultZ] = useState(0)
+
+    useEffect(() => console.log(position))
 
     return (
         <div className={sessionOpen ? `session-cover session-cover-open ${bookClosed ? "back-of-book" : ""}` : "session-cover"}>
